@@ -1,0 +1,123 @@
+
+/* =========================
+   ROOT STYLING
+   ========================= */
+.root {
+    -fx-background-color: #f0f2f5; /* soft light background */
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
+}
+
+/* =========================
+   SIDEBAR
+   ========================= */
+#sidebar {
+    -fx-background-color: #1F2937; /* dark blue-gray */
+    -fx-pref-width: 200px;
+    -fx-padding: 10;
+}
+
+#sidebar .hbox {
+    -fx-alignment: center-left;
+    -fx-spacing: 10;
+    -fx-padding: 8 12;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.3, 0, 2);
+}
+
+#sidebar .hbox:hover {
+    -fx-background-color: #374151; /* slightly lighter on hover */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 8, 0.3, 0, 3);
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+/*.button {
+    -fx-background-color: linear-gradient(to bottom, #4F46E5, #3730A3);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 6, 0.3, 0, 3);
+    -fx-border-color: transparent;
+    -fx-border-radius: 8;
+    -fx-transition: all 0.2s ease;
+}*/
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #5B4EE5, #4F46E5);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10, 0.3, 0, 4);
+    -fx-translate-y: -2; /* lifts button slightly */
+}
+
+/* =========================
+   CARDS / PANELS
+   ========================= */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 25;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0.2, 0, 4);
+}
+
+/* =========================
+   MAIN CONTENT
+   ========================= */
+#mainContent {
+    -fx-background-color: #E5E7EB; /* light gray background */
+    -fx-padding: 20;
+    -fx-background-radius: 15;
+}
+
+/* =========================
+   TABLEVIEW STYLING
+   ========================= */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 6, 0.2, 0, 2);
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #F3F4F6;
+}
+
+.table-view .cell {
+    -fx-padding: 8 10;
+}
+
+/* =========================
+   TEXT FIELDS
+   ========================= */
+.text-field, .password-field {
+    -fx-background-radius: 8;
+    -fx-background-color: white;
+    -fx-padding: 6 10;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0.1, 0, 2);
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #4F46E5;
+    -fx-effect: dropshadow(gaussian, rgba(79,70,229,0.2), 6, 0.2, 0, 3);
+}
+
+/* =========================
+   HOVER EFFECTS FOR CARDS
+   ========================= */
+.card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0.3, 0, 5);
+    -fx-translate-y: -2;
+}
+
+/* =========================
+   ICONS / IMAGES
+   ========================= */
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.3, 0, 2);
+}

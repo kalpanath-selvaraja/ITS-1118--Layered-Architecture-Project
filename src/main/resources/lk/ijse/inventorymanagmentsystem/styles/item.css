@@ -1,0 +1,197 @@
+/* =====================================================
+   ROOT / BASE
+   ===================================================== */
+
+.root {
+    -fx-font-family: "Segoe UI", "Inter", sans-serif;
+    -fx-background-color: #1F2933;
+}
+
+
+.content-area {
+    -fx-background-color: #1F2933;
+}
+
+
+/* =====================================================
+   TITLE
+   ===================================================== */
+
+.title {
+    -fx-text-fill: #E5E7EB;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/* =====================================================
+   SEARCH BAR
+   ===================================================== */
+
+.text-field {
+    -fx-background-color: #222E3A;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #9CA3AF;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: #3A4552;
+    -fx-border-width: 1;
+}
+
+.text-field:focused {
+    -fx-border-color: #2563EB;
+}
+
+/* =====================================================
+   COMBO BOX (STATUS FILTER)
+   ===================================================== */
+
+.combo-box {
+    -fx-background-color: #222E3A;
+    -fx-border-color: #3A4552;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #E5E7EB;
+    -fx-background-color: transparent;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #2B3642;
+    -fx-border-color: #3A4552;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #334155;
+}
+
+/* =====================================================
+   UPDATE / DELETE BUTTON
+   ===================================================== */
+
+.button {
+    -fx-background-color: #2563EB;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+}
+
+.button:hover {
+    -fx-background-color: #1D4ED8;
+}
+
+/* =====================================================
+   TABLE VIEW
+   ===================================================== */
+
+.table-view {
+    -fx-background-color: #2B3642;
+    -fx-border-color: #3A4552;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+/* Header */
+.table-view .column-header-background {
+    -fx-background-color: #222E3A;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: #222E3A;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #E5E7EB;
+    -fx-font-weight: bold;
+}
+
+/* Rows */
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #E5E7EB;
+    
+}
+
+.table-row-cell:filled:hover {
+    -fx-background-color: #334155;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #334155;
+}
+
+/* Cells */
+.table-cell {
+    -fx-text-fill: #E5E7EB;
+    -fx-border-color: transparent;
+    -fx-alignment:center;
+}
+
+/* =====================================================
+   STOCK STATUS COLORS (FOR TABLE COLUMN)
+   ===================================================== */
+
+.status-available {
+    -fx-text-fill: #16A34A;
+    -fx-font-weight: bold;
+}
+
+.status-low {
+    -fx-text-fill: #D97706;
+    -fx-font-weight: bold;
+}
+
+.status-out {
+    -fx-text-fill: #DC2626;
+    -fx-font-weight: bold;
+}
+
+/* =====================================================
+   DIVIDER LINE (IF USED)
+   ===================================================== */
+
+.divider {
+    -fx-background-color: #3A4552;
+}
+
+
+.card {
+    -fx-background-color: #263444;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #3A4552;
+    -fx-border-width: 1;
+
+}
+
+
+.status-available {
+    -fx-background-color: #16a34a;
+    -fx-text-fill: white;
+    -fx-padding: 4 10;
+    -fx-background-radius: 6;
+    -fx-font-weight: bold;
+}
+
+.status-low {
+    -fx-background-color: #f59e0b;
+    -fx-text-fill: #1f2933;
+    -fx-padding: 4 10;
+    -fx-background-radius: 6;
+    -fx-font-weight: bold;
+}
+
+.status-out {
+    -fx-background-color: #dc2626;
+    -fx-text-fill: white;
+    -fx-padding: 4 10;
+    -fx-background-radius: 6;
+    -fx-font-weight: bold;
+}
+
+.subtitle {
+    -fx-text-fill: #9FB3C8;
+    -fx-font-size: 14px;
+}

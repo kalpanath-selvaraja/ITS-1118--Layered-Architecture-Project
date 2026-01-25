@@ -1,0 +1,77 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="Blank_A4" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="51d7680a-da47-4a97-a4e4-f42de5c2ade8">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+	<query language="SQL"><![CDATA[SELECT * FROM Orders]]></query>
+	<field name="order_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="order_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="order_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Orders"/>
+	</field>
+	<field name="cus_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cus_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="cus_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Orders"/>
+	</field>
+	<field name="emp_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="emp_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="emp_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Orders"/>
+	</field>
+	<field name="date" class="java.time.LocalDateTime">
+		<property name="com.jaspersoft.studio.field.name" value="date"/>
+		<property name="com.jaspersoft.studio.field.label" value="date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Orders"/>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Orders"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="81" splitType="Stretch">
+		<element kind="staticText" uuid="2e058ebb-e0ae-430c-bc33-b95f315d17a3" x="128" y="20" width="285" height="50" forecolor="#FF0D05" backcolor="#FFFFFF" fontSize="25.0" bold="true" italic="false" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Orders]]></text>
+		</element>
+	</title>
+	<pageHeader height="41" splitType="Stretch">
+		<element kind="staticText" uuid="290e3067-13d3-4fe3-ba0e-5f177cdbd986" x="40" y="8" width="68" height="20" fontSize="14.0" bold="true">
+			<text><![CDATA[Order Id]]></text>
+		</element>
+		<element kind="staticText" uuid="2d3d81ab-9a75-4ae0-8498-20e2970b9a2e" x="120" y="7" width="90" height="23" fontSize="14.0" bold="true">
+			<text><![CDATA[Customer Id]]></text>
+		</element>
+		<element kind="staticText" uuid="b1463767-f17b-4eb2-83e7-c3d9b8e6fb13" x="224" y="8" width="93" height="20" fontSize="14.0" bold="true">
+			<text><![CDATA[Employee Id]]></text>
+		</element>
+		<element kind="staticText" uuid="dc0de6ec-a686-4bae-acdf-da2243f62adb" x="330" y="8" width="110" height="20" fontSize="14.0" bold="true">
+			<text><![CDATA[Date & Time]]></text>
+		</element>
+		<element kind="staticText" uuid="4b4f8f81-710c-4c3c-b356-53da7e727133" x="450" y="8" width="100" height="20" fontSize="14.0" bold="true">
+			<text><![CDATA[Total]]></text>
+		</element>
+		<element kind="line" uuid="1dc17038-637f-4434-bd89-c8206d0debed" x="24" y="33" width="525" height="1">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+	</pageHeader>
+	<columnHeader height="7" splitType="Stretch"/>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<element kind="textField" uuid="c7844f39-ebdb-4383-8fe3-8305759d03f2" x="120" y="10" width="60" height="20">
+				<expression><![CDATA[$F{cus_id}]]></expression>
+			</element>
+			<element kind="textField" uuid="5d56c479-4ea7-41cb-bcee-7430b1d5fde8" x="40" y="12" width="68" height="18">
+				<expression><![CDATA[$F{order_id}]]></expression>
+			</element>
+			<element kind="textField" uuid="4ef78e6f-cdc6-4be9-ab3d-8db07fc89012" x="230" y="12" width="80" height="18">
+				<expression><![CDATA[$F{emp_id}]]></expression>
+			</element>
+			<element kind="textField" uuid="5cc990c9-df6f-4327-bd87-de0f4be4a379" x="330" y="10" width="120" height="20">
+				<expression><![CDATA[$F{date}]]></expression>
+			</element>
+			<element kind="textField" uuid="acdb5629-b29e-4086-abd6-6c2f9a423e09" x="450" y="13" width="100" height="17">
+				<expression><![CDATA[$F{total}]]></expression>
+			</element>
+		</band>
+	</detail>
+</jasperReport>

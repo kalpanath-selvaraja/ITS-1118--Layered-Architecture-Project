@@ -1,0 +1,39 @@
+/*.root {
+    -fx-background-color: #1E2A38;
+}*/
+
+/* Root background */
+.border-pane-root {
+    -fx-background-color:#1E2A38;/* dark bluish */
+}
+
+/* Header background – same hue and saturation, slightly lighter */
+#topRegion {
+ 
+    -fx-background-color: #293544;/* slightly lighter */
+}
+
+.button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 0;
+    
+}
+
+.text-field {
+    -fx-background-color: #F5F5F5;
+    -fx-border-color: #00BFA6;
+    -fx-border-radius: 5;
+    -fx-text-fill: #1E2A38;
+}
+
+.label {
+    -fx-text-fill: #F5F5F5;
+    -fx-font-size: 14px;
+}
+
+.button-active {
+    -fx-background-color: #00BFA6; /* Highlight color */
+    -fx-text-fill: white;
+}

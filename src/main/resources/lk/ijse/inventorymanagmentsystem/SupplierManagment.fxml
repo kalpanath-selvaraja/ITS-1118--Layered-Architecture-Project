@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="contentPane" prefHeight="706.0" prefWidth="1269.0" styleClass="root" stylesheets="@../../../styles/item.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.inventorymanagmentsystem.controller.SupplierManagmentController">
+   <children>
+      <AnchorPane layoutX="80.0" layoutY="104.0" prefHeight="562.0" prefWidth="654.0" styleClass="card">
+         <children>
+            <TextField fx:id="supplierName" layoutX="302.0" layoutY="100.0" prefHeight="46.0" prefWidth="190.0" promptText="Enter Supplier Name" styleClass="text-field" />
+            <TextField fx:id="supplierContact" layoutX="419.0" layoutY="195.0" prefHeight="46.0" prefWidth="190.0" promptText="Contact" styleClass="text-field" />
+            <Pane layoutY="51.0" prefHeight="1.0" prefWidth="654.0" styleClass="sidebar-divider" stylesheets="@../../../styles/dashboard.css" />
+            <Label layoutX="78.0" layoutY="14.0" styleClass="title" text="Supplier Details" />
+            <TextField fx:id="supplierEmail" layoutX="78.0" layoutY="195.0" prefHeight="46.0" prefWidth="291.0" promptText="Email" styleClass="text-field" />
+            <TextField fx:id="supplierId" layoutX="78.0" layoutY="100.0" prefHeight="46.0" prefWidth="190.0" promptText="Supplier Id" />
+            <Label fx:id="delete1" layoutX="78.0" layoutY="77.0" text=" Supplier ID  *" textFill="WHITE" />
+            <Label fx:id="delete11" layoutX="302.0" layoutY="77.0" text=" Supplier ID  *" textFill="WHITE" />
+            <Label fx:id="delete12" layoutX="78.0" layoutY="172.0" text=" Email Address  *" textFill="WHITE" />
+            <Label fx:id="delete121" layoutX="419.0" layoutY="172.0" text=" Contact Number  *" textFill="WHITE" />
+            <TableView fx:id="cartItemTable" layoutX="73.0" layoutY="282.0" prefHeight="200.0" prefWidth="463.0">
+              <columns>
+                <TableColumn fx:id="cartItemId" prefWidth="75.0" text="Item ID" />
+                <TableColumn fx:id="cartItemName" prefWidth="231.99997863769534" text="Item Name" />
+                  <TableColumn fx:id="cartAction" prefWidth="153.59996337890624" text="Action" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <Label fx:id="add" layoutX="80.0" layoutY="51.0" styleClass="title" text="Add New Supplier" />
+      <Label fx:id="update" layoutX="80.0" layoutY="51.0" styleClass="title" text="Update" />
+      <Label fx:id="delete" layoutX="80.0" layoutY="51.0" styleClass="title" text="Delete" />
+      <TableView fx:id="itemTable" layoutX="763.0" layoutY="104.0" prefHeight="470.0" prefWidth="416.0">
+        <columns>
+          <TableColumn fx:id="colItemId" prefWidth="75.0" text="Item ID" />
+          <TableColumn fx:id="colItemName" prefWidth="236.79986572265625" text="Item Name" />
+            <TableColumn fx:id="colAction" prefWidth="101.60009765625" text="Action" />
+        </columns>
+      </TableView>
+      <AnchorPane layoutX="763.0" layoutY="588.0" prefHeight="77.0" prefWidth="416.0" style="-fx-background-color: #263444; -fx-border-color: #3A4552; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1;">
+         <children>
+            <Button fx:id="btnUpdate" layoutX="221.0" layoutY="23.0" mnemonicParsing="false" onAction="#updateSupplier" prefHeight="38.0" prefWidth="171.0" text="            Save Supplier">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="saveImage" fitHeight="32.0" fitWidth="26.0" layoutX="229.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../../Downloads/save-icon.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnAdd" layoutX="221.0" layoutY="27.0" mnemonicParsing="false" onAction="#addSupplier" prefHeight="38.0" prefWidth="171.0" text="            Add Supplier">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="plusImage" fitHeight="32.0" fitWidth="26.0" layoutX="232.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../../Downloads/plus-icon.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="25.0" layoutY="30.0" mnemonicParsing="false" onAction="#back" prefHeight="32.0" prefWidth="74.0" text="back" />
+            <Button fx:id="btnDelete" layoutX="221.0" layoutY="27.0" mnemonicParsing="false" onAction="#deleteSupplier" prefHeight="38.0" prefWidth="171.0" text="            Delete Supplier">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

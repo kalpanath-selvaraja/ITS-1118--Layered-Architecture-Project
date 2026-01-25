@@ -1,0 +1,15 @@
+.root {
+    -fx-background-color:  #F4F6F9;
+    -fx-background-radius:  10;
+    
+}
+
+.text-field {
+    -fx-background-color: none;
+    -fx-border-color: #b5c6df;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-prompt-text-fill: black;
+    -fx-text-fill: black;
+    -fx-border-image-width:1;
+}

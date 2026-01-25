@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="contentPane" prefHeight="706.0" prefWidth="1269.0" styleClass="content-area" stylesheets="@../../../styles/item.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.inventorymanagmentsystem.controller.ItemViewController">
+   <children>
+      <AnchorPane layoutX="37.0" layoutY="99.0" prefHeight="114.0" prefWidth="1208.0" style="-fx-background-color: #263444; -fx-border-color: #3A4552; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1;">
+         <children>
+            <TextField fx:id="itemNameField" layoutX="81.0" layoutY="43.0" onKeyPressed="#handleItemSearch" prefHeight="46.0" prefWidth="411.0" promptText="Enter Name" />
+            <Label layoutX="81.0" layoutY="12.0" prefHeight="18.0" prefWidth="94.0" text="Search Item" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="649.0" layoutY="12.0" prefHeight="18.0" prefWidth="94.0" text="Fillter status" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="649.0" layoutY="41.0" prefHeight="46.0" prefWidth="159.0">
+               <children>
+                  <ComboBox fx:id="statusFilter" layoutX="4.0" layoutY="10.0" prefWidth="150.0" promptText="ALL" />
+               </children>
+            </AnchorPane>
+            <Button layoutX="1023.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleButtonEdit" prefHeight="34.0" prefWidth="170.0" text="Edit">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button layoutX="822.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleButtonAdd" prefHeight="34.0" prefWidth="170.0" text="Add">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="33.0" layoutY="245.0" prefHeight="369.0" prefWidth="1218.0" styleClass="card">
+         <children>
+            <TableView fx:id="itemTable" layoutX="24.8" layoutY="24.8" prefHeight="322.0" prefWidth="1175.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="24.0">
+              <columns>
+                <TableColumn fx:id="itemId" prefWidth="75.0" text="Item ID" />
+                <TableColumn fx:id="itemName" prefWidth="208.79995727539062" text="Item Name" />
+                  <TableColumn fx:id="quantity" prefWidth="92.79998779296875" text="Quantity" />
+                  <TableColumn fx:id="unitPrice" prefWidth="118.39996337890625" text="UnitPrice" />
+                  <TableColumn fx:id="stockStatus" prefWidth="201.5999755859375" text="stockStatus" />
+                  <TableColumn fx:id="warranty" prefWidth="100.0" text="warranty" />
+                  <TableColumn fx:id="supplier" prefWidth="201.5999755859375" text="Supplier" />
+                  <TableColumn fx:id="action" prefWidth="100.79998779296875" text="Action" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <Label layoutX="55.0" layoutY="30.0" prefHeight="38.0" prefWidth="239.0" styleClass="title" stylesheets="@../../../styles/item.css" text="Item Managment" textFill="WHITE">
+         <font>
+            <Font name="Gigi" size="78.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

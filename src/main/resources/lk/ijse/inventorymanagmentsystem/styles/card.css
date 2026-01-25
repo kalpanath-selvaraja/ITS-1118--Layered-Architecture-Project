@@ -1,0 +1,84 @@
+
+.card {
+    -fx-background-color: #263444;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #3A4552;
+    -fx-border-width: 1;
+
+}
+
+
+/* Root */
+.root {
+    -fx-font-family: "Segoe UI", "Inter", sans-serif;
+    -fx-background-color: #1F2933;
+}
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: #222E3A;
+}
+
+/* Main content / cards */
+.card,
+.table-view,
+.pane {
+    -fx-background-color: #2B3642;
+    -fx-background-radius: 8;
+}
+
+/* Divider line */
+.divider {
+    -fx-background-color: #3A4552;
+}
+
+/* Text */
+.label {
+    -fx-text-fill: #E5E7EB;
+}
+
+.label.secondary {
+    -fx-text-fill: #9CA3AF;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color: #2563EB;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+}
+
+.button:hover {
+    -fx-background-color: #1D4ED8;
+}
+
+/* Table */
+.table-view {
+    -fx-control-inner-background: #2B3642;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #334155;
+}
+
+/* Stock Status Colors */
+.status-available {
+    -fx-text-fill: #16A34A;
+    -fx-font-weight: bold;
+}
+
+.status-low {
+    -fx-text-fill: #D97706;
+    -fx-font-weight: bold;
+}
+
+.status-out {
+    -fx-text-fill: #DC2626;
+    -fx-font-weight: bold;
+}
