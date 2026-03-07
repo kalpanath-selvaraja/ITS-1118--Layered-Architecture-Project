@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import lk.ijse.inventorymanagmentsystem.dto.UserDTO;
-import lk.ijse.inventorymanagmentsystem.util.CrudUtil;
+import lk.ijse.inventorymanagmentsystem.dao.CrudUtil;
 
 /**
  *

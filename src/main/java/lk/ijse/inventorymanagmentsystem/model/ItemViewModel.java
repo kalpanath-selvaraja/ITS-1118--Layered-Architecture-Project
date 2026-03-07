@@ -4,31 +4,24 @@
  */
 package lk.ijse.inventorymanagmentsystem.model;
 
-import java.io.InputStream;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import lk.ijse.inventorymanagmentsystem.db.DBConnection;
+
 import lk.ijse.inventorymanagmentsystem.dto.ItemDTO;
-import lk.ijse.inventorymanagmentsystem.util.CrudUtil;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.view.JasperViewer;
+import lk.ijse.inventorymanagmentsystem.dao.CrudUtil;
 
 /**
  *
  * @author kalpanath
  */
 public class ItemViewModel {
+
+
     public List<ItemDTO> searchItem(String itemName)throws SQLException{
         
             ResultSet rs = CrudUtil.execute(
-                    
 
                 "SELECT i.item_id, " +
                 "i.name , " +
@@ -107,6 +100,8 @@ public class ItemViewModel {
         return 0; 
     }
 
+
+
     
     public boolean updateItems(ItemDTO itemDTO , int warrantyId) throws SQLException{
         
@@ -145,7 +140,7 @@ public class ItemViewModel {
     
     public boolean addItems(ItemDTO itemDTO, int warrantyId) throws SQLException {
 
-        Object warrantyParam = (warrantyId == 0) ? null : warrantyId;
+        int warrantyParam = (warrantyId == 0) ? null : warrantyId;
 
         int result = CrudUtil.executeAndReturnId(
                 "INSERT INTO Item (name, unit_price, quantity, warranty_id) "

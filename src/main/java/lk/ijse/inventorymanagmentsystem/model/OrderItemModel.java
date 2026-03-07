@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import lk.ijse.inventorymanagmentsystem.dto.OrderItemDTO;
-import lk.ijse.inventorymanagmentsystem.util.CrudUtil;
+import lk.ijse.inventorymanagmentsystem.dao.CrudUtil;
 
 public class OrderItemModel {
 
@@ -76,9 +76,9 @@ public class OrderItemModel {
         return list;
     }
 
-    
-    public boolean deleteItemsByOrderId(int orderId) throws SQLException {
-        String sql = "DELETE FROM OrderItem WHERE order_id = ?";
-        return CrudUtil.execute(sql, orderId);
-    }
+//
+//    public boolean deleteItemsByOrderId(int orderId) throws SQLException {
+//        String sql = "DELETE FROM OrderItem WHERE order_id = ?";
+//        return CrudUtil.execute(sql, orderId);
+//    }
 }

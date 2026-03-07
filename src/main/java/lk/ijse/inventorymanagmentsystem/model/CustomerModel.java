@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import lk.ijse.inventorymanagmentsystem.dto.CustomerDTO;
-import lk.ijse.inventorymanagmentsystem.util.CrudUtil;
+import lk.ijse.inventorymanagmentsystem.dao.CrudUtil;
 
 /**
  *
@@ -66,25 +66,25 @@ public class CustomerModel {
         return cusDTO;
     }
     
-    public boolean updateCustomer(String name, String contact, int id) throws SQLException{
-        boolean result = CrudUtil.execute("UPDATE Customer  SET name =?, contact=? WHERE cus_id = ?", 
-                name,contact,id);
+    public boolean updateCustomer(CustomerDTO CusDTO) throws SQLException{
+        boolean result = CrudUtil.execute("UPDATE Customer  SET name =?, contact=? WHERE cus_id = ?",
+                CusDTO.getName(),CusDTO.getContact(),CusDTO.getId());
         
         return result;
     }
     
-    public int getCustomerID(String contact) throws SQLException {
-        
-        int con = Integer.parseInt(contact);
-        
-        String sql = "SELECT cus_id FROM Customer WHERE contact = ?";
-        ResultSet rs = CrudUtil.execute(sql,con ); // Use executeQuery, not executeUpdate
-        
-        if (rs.next()) {
-            return rs.getInt(1);
-        }
-            return -1; // or throw exception if customer not found
-    }
+//    public int getCustomerID(String contact) throws SQLException {
+//
+//        int con = Integer.parseInt(contact);
+//
+//        String sql = "SELECT cus_id FROM Customer WHERE contact = ?";
+//        ResultSet rs = CrudUtil.execute(sql,con ); // Use executeQuery, not executeUpdate
+//
+//        if (rs.next()) {
+//            return rs.getInt(1);
+//        }
+//            return -1; // or throw exception if customer not found
+//    }
     
     
     public List<CustomerDTO> getAllCustomers() throws SQLException {

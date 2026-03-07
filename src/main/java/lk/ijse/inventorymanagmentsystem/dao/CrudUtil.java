@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package lk.ijse.inventorymanagmentsystem.util;
+package lk.ijse.inventorymanagmentsystem.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,8 +50,6 @@ public class CrudUtil {
         return pstm.executeQuery();
     }
 
-    
-    
     public static int executeAndReturnId(String sql, Object... params) throws SQLException {
         
         Connection conn = DBConnection.getinstance().getConnection();

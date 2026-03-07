@@ -22,6 +22,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.inventorymanagmentsystem.bo.custom.CustomerBO;
+import lk.ijse.inventorymanagmentsystem.dao.DAOFactory;
 import lk.ijse.inventorymanagmentsystem.dto.CustomerDTO;
 import lk.ijse.inventorymanagmentsystem.model.CustomerModel;
 import lk.ijse.inventorymanagmentsystem.util.Navigation;
@@ -75,6 +77,8 @@ public class CustomerViewController implements Initializable {
      
     @FXML
     private AnchorPane customerPane;
+
+    CustomerBO customerBO = (CustomerBO) DAOFactory.getInstance().getDAOTypes(DAOFactory.DAOTypes.CUSTOMER);
     
     
     //String FXML = "/lk/ijse/inventorymanagmentsystem/CustomerUpdate.fxml";
@@ -245,7 +249,7 @@ public class CustomerViewController implements Initializable {
 
     public  void loadCustomerTable() {
         try{
-            List<CustomerDTO> customerList = customerModel.getAllCustomers();
+            List<CustomerDTO> customerList = customerBO.getAllCustomers();////
             
             ObservableList<CustomerDTO> obList = FXCollections.observableArrayList();
             

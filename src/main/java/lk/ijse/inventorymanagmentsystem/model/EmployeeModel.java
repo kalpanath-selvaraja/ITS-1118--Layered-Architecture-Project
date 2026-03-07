@@ -9,8 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import lk.ijse.inventorymanagmentsystem.dto.EmployeeDTO;
-import lk.ijse.inventorymanagmentsystem.dto.UserDTO;
-import lk.ijse.inventorymanagmentsystem.util.CrudUtil;
+import lk.ijse.inventorymanagmentsystem.dao.CrudUtil;
 
 /**
  *
@@ -24,7 +23,7 @@ import lk.ijse.inventorymanagmentsystem.util.CrudUtil;
 
 public class EmployeeModel {
     
-    EmployeeDTO emp ;
+    
     
     public static int getEmployeeIdByUserId(int userId) throws SQLException {
         ResultSet rs = CrudUtil.execute("SELECT emp_id FROM Employee WHERE user_id=?", userId);
@@ -50,7 +49,6 @@ public class EmployeeModel {
         
         if(rs.next()){
             result = rs.getInt("user_id");
-            System.out.println(result);
             return result;
         }
         
@@ -70,8 +68,8 @@ public class EmployeeModel {
             String userName = rs.getString("name");
             String contact = rs.getString("contact");
             int userId = rs.getInt("user_id");
-            
-            emp = new EmployeeDTO(  Integer.parseInt(id),userName,contact,userId);
+
+            EmployeeDTO  emp = new EmployeeDTO(  Integer.parseInt(id),userName,contact,userId);
             items.add(emp);
         }
         return items;

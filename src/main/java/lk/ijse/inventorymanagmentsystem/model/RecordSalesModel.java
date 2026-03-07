@@ -14,7 +14,7 @@ import lk.ijse.inventorymanagmentsystem.dto.CheckoutDTO;
 import lk.ijse.inventorymanagmentsystem.dto.CustomerDTO;
 import lk.ijse.inventorymanagmentsystem.dto.OrderDTO;
 import lk.ijse.inventorymanagmentsystem.dto.OrderItemDTO;
-import lk.ijse.inventorymanagmentsystem.util.CrudUtil;
+import lk.ijse.inventorymanagmentsystem.dao.CrudUtil;
 
 /**
  *

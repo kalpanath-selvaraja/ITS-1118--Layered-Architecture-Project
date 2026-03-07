@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import lk.ijse.inventorymanagmentsystem.dto.ItemDTO;
-import lk.ijse.inventorymanagmentsystem.util.CrudUtil;
+import lk.ijse.inventorymanagmentsystem.dao.CrudUtil;
 
 /**
  *
@@ -90,11 +90,11 @@ public class ItemModel {
        return result;
     }
 
-    public boolean deleteItems(ItemDTO dto)throws SQLException{
-        
-        boolean result = CrudUtil.execute("UPDATE Item SET is_active = FALSE WHERE itemId = ?", dto.getItemId());
-        return result;
-    }
+//    public boolean deleteItems(ItemDTO dto)throws SQLException{
+//
+//        boolean result = CrudUtil.execute("UPDATE Item SET is_active = FALSE WHERE itemId = ?", dto.getItemId());
+//        return result;
+//    }
     
     public int getLowStocksNumber() throws SQLException{
         ResultSet rs = CrudUtil.execute("SELECT COUNT(*) AS Low_Stock FROM Item WHERE quantity <= 5 AND quantity > 0");

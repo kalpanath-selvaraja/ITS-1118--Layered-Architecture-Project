@@ -13,7 +13,7 @@ import javafx.scene.control.Alert;
 import lk.ijse.inventorymanagmentsystem.dto.ItemDTO;
 
 import lk.ijse.inventorymanagmentsystem.dto.SupplierDTO;
-import lk.ijse.inventorymanagmentsystem.util.CrudUtil;
+import lk.ijse.inventorymanagmentsystem.dao.CrudUtil;
 
 
 /**
