@@ -141,4 +141,9 @@ public class OrderDAOImpl implements OrderDAO {
         }
         return orderList;
     }
+
+    @Override
+    public List<Order> search(String search) throws SQLException {
+        return List.of();
+    }
 }

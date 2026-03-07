@@ -44,6 +44,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return items;
     }
 
+    @Override
+    public List<Employee> search(String search) throws SQLException {
+        return List.of();
+    }
+
 
     /// UNIQUE METHODS ///////////////
 

@@ -68,7 +68,22 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
+    public List<Customer> search(String search) throws SQLException {
+        return List.of();
+    }
+
+    @Override
     public boolean save(Customer DTO) throws SQLException {
         return false;
+    }
+
+    public int getCustomerId(Customer customer) throws SQLException{
+
+        int cusId = CrudUtil.executeAndReturnId(
+                "SELECT cus_id FROM Customer WHERE contact=?",
+                customer.getContact()
+        );
+
+        return cusId;
     }
 }
