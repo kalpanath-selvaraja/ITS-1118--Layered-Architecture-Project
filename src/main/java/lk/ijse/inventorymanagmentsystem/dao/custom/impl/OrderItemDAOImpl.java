@@ -79,4 +79,9 @@ public class OrderItemDAOImpl implements OrderItemDAO {
     public List<OrderItem> getAll() throws SQLException {
         return List.of();
     }
+
+    @Override
+    public List<OrderItem> search(String search) throws SQLException {
+        return List.of();
+    }
 }

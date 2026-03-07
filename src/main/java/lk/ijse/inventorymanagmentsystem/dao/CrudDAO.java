@@ -13,6 +13,7 @@ public interface CrudDAO<T> extends SuperDAO{
 
     public List<T> getAll() throws SQLException;
 
+    public List<T> search(String search) throws SQLException;
 
 
 

@@ -23,48 +23,9 @@ import lk.ijse.inventorymanagmentsystem.dao.CrudUtil;
 public class SupplierModel {
     
     
+
     
-    public List<SupplierDTO> searchSupplier(String name) throws SQLException {
 
-        String SQL = "SELECT * FROM Supplier WHERE name LIKE ?";
-
-        String searchValue = "%" + name + "%";
-
-        ResultSet rs = CrudUtil.execute(SQL, searchValue);
-
-        List<SupplierDTO> items = new ArrayList<>();
-
-        while (rs.next()) {
-            int sup_id = rs.getInt("supplier_id");
-            String supName = rs.getString("name");
-            String eMail = rs.getString("email");
-            String contact = rs.getString("contact");
-
-            items.add(new SupplierDTO(sup_id, supName, eMail, contact));
-        }
-
-        return items;
-    }
-    
-    public List<SupplierDTO>  getSupplier () throws SQLException{
-        
-        ResultSet rs = CrudUtil.execute("SELECT * FROM Supplier");
-        
-        List<SupplierDTO> items = new ArrayList<>();
-        
-        while(rs.next()){
-            int sup_id = rs.getInt("supplier_id");
-            String supName = rs.getString("name");
-            String eMail = rs.getString("email");
-            String contact = rs.getString("contact");
-            
-            items.add(new SupplierDTO(sup_id, supName, eMail, contact));
-            
-        }
-        
-        return items;
-        
-    }
 
     
     public boolean updateSupplierWithItems(SupplierDTO supDTO, List<ItemDTO> cartItems) throws SQLException {
@@ -94,24 +55,6 @@ public class SupplierModel {
         return true;
     }
 
-
-    public boolean checkSupsplier(int Id) throws SQLException{
-        
-        ResultSet rs = CrudUtil.execute("SELECT supplier_id FROM Supplier WHERE supplier_id = ?; ", Id);
-        
-        int result  = rs.getInt("supplier_id");
-        
-        return result >0;
-    }
-    
-    public boolean checkSupplierconnected(int Id) throws SQLException{
-        
-        ResultSet rs = CrudUtil.execute("SELECT EXISTS(SELECT 1 FROM Item WHERE Supplier_id = ? )", Id);
-        if (rs.next()) {
-            return rs.getInt(1) == 1;
-        }
-        return false;
-    }
     
     public boolean checkSupplierHasItems(int supplierId) throws SQLException {
         // Count items linked to this supplier
@@ -151,7 +94,7 @@ public class SupplierModel {
         }
         return 0;
 
-       
+
     }
     
     public boolean checkSupplierexsists(String name , String email ,String contact) throws SQLException{

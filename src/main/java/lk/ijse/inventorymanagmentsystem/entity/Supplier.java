@@ -1,34 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package lk.ijse.inventorymanagmentsystem.dto;
+package lk.ijse.inventorymanagmentsystem.entity;
 
-/**
- *
- * @author kalpanath
- */
-public class SupplierDTO {
+public class Supplier {
     private int supplier_id ;
     private String supplier_name;
     private String email;
     private String contact;
 
-
-
-    public SupplierDTO() {
+    public Supplier() {
     }
 
-    public SupplierDTO(String supplier_name, String email, String contact) {
-        this.supplier_name = supplier_name;
-        this.email = email;
-        this.contact = contact;
-    }
-    
-    
-    
-    
-    public SupplierDTO(int supplier_id, String supplier_name, String email, String contact) {
+    public Supplier(int supplier_id, String supplier_name, String email, String contact) {
         this.supplier_id = supplier_id;
         this.supplier_name = supplier_name;
         this.email = email;
@@ -66,8 +47,4 @@ public class SupplierDTO {
     public void setContact(String contact) {
         this.contact = contact;
     }
-
-    
-    
-
 }
