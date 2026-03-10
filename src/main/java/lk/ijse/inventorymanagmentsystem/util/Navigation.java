@@ -16,21 +16,15 @@ import javafx.scene.layout.AnchorPane;
  * @author kalpanath
  */
 public class Navigation {
-    
 
 
-
-
-
-
-
-    // 1️⃣ Simple load (no data)
+    // Simple load (no data)
     public static void load(AnchorPane container, String fxml) throws IOException {
         Parent root = FXMLLoader.load(Navigation.class.getResource(fxml));
         setContent(container, root);
     }
 
-    // 2️⃣ Load with controller access (for data passing)
+    // Load with controller access (for data passing)
     public static <T> T loadWithController(
             AnchorPane container,
             String fxml
@@ -44,7 +38,7 @@ public class Navigation {
         return loader.getController();
     }
 
-    // 3️⃣ Shared anchor logic
+    // Shared anchor logic
     private static void setContent(AnchorPane container, Parent content) {
         container.getChildren().setAll(content);
 

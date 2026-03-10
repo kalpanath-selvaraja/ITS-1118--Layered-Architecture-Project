@@ -1,5 +1,7 @@
 package lk.ijse.inventorymanagmentsystem.entity;
 
+import lk.ijse.inventorymanagmentsystem.dto.OrderDTO;
+
 import java.sql.Timestamp;
 
 public class Order {
@@ -36,6 +38,18 @@ public class Order {
         this.cusid = cusId;
         this.empid = empId;
         this.date = date;
+        this.total = total;
+    }
+
+    public Order(OrderDTO orderDTO) {
+        this.cusid = orderDTO.getCusid();
+        this.empid = orderDTO.getEmpid();
+        this.total = orderDTO.getTotal();
+    }
+
+    public Order(Integer cusId, int empId, double total) {
+        this.cusid = cusId;
+        this.empid = empId;
         this.total = total;
     }
 

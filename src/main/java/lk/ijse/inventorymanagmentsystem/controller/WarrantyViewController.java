@@ -21,8 +21,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.custom.WarrantyBO;
 import lk.ijse.inventorymanagmentsystem.dto.WarrantyDTO;
-import lk.ijse.inventorymanagmentsystem.model.WarrantyModel;
 
 /**
  * FXML Controller class
@@ -69,13 +70,14 @@ public class WarrantyViewController implements Initializable {
     
     @FXML
     private TableColumn<WarrantyDTO, Void> colAction;
-    
-    WarrantyModel warrantyModel = new WarrantyModel();
+
     
     private final String ORDER_ID_REGEX = "^[0-9]+$";
 
     
      private final ObservableList<WarrantyDTO> warrantyList =  FXCollections.observableArrayList();
+
+     WarrantyBO  warrantyBO = (WarrantyBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.WARRANTY);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -144,20 +146,21 @@ public class WarrantyViewController implements Initializable {
         try {
             List<WarrantyDTO> searchedResult;
         
-            searchedResult = warrantyModel.serarchOrders(odId);
+            searchedResult = warrantyBO.searchWarrantyByOrderId(odId);
             warrantyList.clear();
             warrantyList.addAll(searchedResult);
         } catch (SQLException ex) {
-            System.out.println("cdavs");
+
             System.getLogger(WarrantyViewController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
          
          
     }
+
     
     private void loadtables(){
         try {
-            List<WarrantyDTO> List = warrantyModel.getWarrantyTable();
+            List<WarrantyDTO> List = warrantyBO.getWarrantyTable();
             warrantyList.addAll(List);
             warrantyOrderTable.setItems(warrantyList);
             
@@ -173,7 +176,7 @@ public class WarrantyViewController implements Initializable {
         
         
         try {
-            String  currentStatus = warrantyModel.claimWarranty(oiId);
+            String  currentStatus = warrantyBO.claimWarranty(oiId);
             
             if(currentStatus == null){
                 new Alert (Alert.AlertType.ERROR , "warranty status is Empty").show();
@@ -183,16 +186,23 @@ public class WarrantyViewController implements Initializable {
             switch (currentStatus) {
                 case "Active":
                     new Alert(Alert.AlertType.INFORMATION, "Warranty claimed successfully").show();
+                    warrantyList.clear();
                     loadtables();
                     break;
                 case "Expired":
                     new Alert(Alert.AlertType.WARNING, "Warranty has expired, cannot claim").show();
+                    warrantyList.clear();
+                    loadtables();
                     break;
                 case "Claimed":
                     new Alert(Alert.AlertType.INFORMATION, "Warranty has already been claimed").show();
+                    warrantyList.clear();
+                    loadtables();
                     break;
                 case "No Warranty":
                     new Alert(Alert.AlertType.INFORMATION, "This item has no warranty").show();
+                    warrantyList.clear();
+                    loadtables();
                     break;
                 default:
                     new Alert(Alert.AlertType.ERROR, "Unknown warranty status").show();

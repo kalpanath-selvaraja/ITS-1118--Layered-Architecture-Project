@@ -28,6 +28,12 @@ public class Customer {
 
         }
 
+        public Customer(CustomerDTO customerDTO) {
+            this.id = customerDTO.getId();
+            this.name = customerDTO.getName();
+            this.contact = customerDTO.getContact();
+        }
+
 
 
         public int getId() {

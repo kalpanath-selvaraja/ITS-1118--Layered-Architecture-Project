@@ -10,9 +10,9 @@ import java.sql.SQLException;
 public interface SupplierDAO extends CrudDAO<Supplier> {
     public boolean updateSuppler(Supplier supplier) throws SQLException ;
 
-    public void delete(int supplierId) throws SQLException ;
+    public boolean delete(int supplierId) throws SQLException ;
 
     public int getSupplierID(String name) throws SQLException;
 
-    public boolean getContact(String contact) throws SQLException ;
+    public boolean existsByContact(String contact) throws SQLException ;
 }

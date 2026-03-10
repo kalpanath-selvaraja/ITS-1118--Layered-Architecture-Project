@@ -4,7 +4,11 @@
  */
 package lk.ijse.inventorymanagmentsystem.dto;
 
-/**
+                   import lk.ijse.inventorymanagmentsystem.entity.Item;
+
+                   import java.util.List;
+
+                   /**
  *
  * @author kalpanath
  */
@@ -20,6 +24,25 @@ public class ItemDTO {
     private String supplierName;
     
     private int supplierId;   // VERY IMPORTANT
+
+    public ItemDTO(List<Item> cartItems) {
+        this.itemId = cartItems.get(0).getItemId();
+        this.itemName = cartItems.get(0).getItemName();
+        this.quantity = cartItems.get(0).getQuantity();
+        this.unitPrice = cartItems.get(0).getUnitPrice();
+        this.warranty = cartItems.get(0).getWarranty();
+
+    }
+
+    public ItemDTO(Item item) {
+        this.itemId = item.getItemId();
+        this.itemName = item.getItemName();
+        this.quantity = item.getQuantity();
+        this.unitPrice = item.getUnitPrice();
+        this.warranty = item.getWarranty();
+        this.supplierName = item.getSupplierName();
+    }
+
 
     public int getSupplierId() {
         return supplierId;

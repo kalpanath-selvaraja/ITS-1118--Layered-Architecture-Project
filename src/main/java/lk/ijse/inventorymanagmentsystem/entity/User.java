@@ -1,5 +1,7 @@
 package lk.ijse.inventorymanagmentsystem.entity;
 
+import lk.ijse.inventorymanagmentsystem.dto.UserDTO;
+
 public class User {
     private  int userId;
     private String username;
@@ -14,6 +16,13 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public User(UserDTO userDTO) {
+        this.userId = userDTO.getUserId();
+        this.username = userDTO.getUsername();
+        this.password = userDTO.getPassword();
+        this.role = userDTO.getRole();
     }
 
     public int getUserId() {

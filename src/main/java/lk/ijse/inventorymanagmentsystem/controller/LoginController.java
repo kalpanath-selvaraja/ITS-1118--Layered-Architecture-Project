@@ -8,10 +8,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import lk.ijse.inventorymanagmentsystem.App;
+import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.custom.EmployeeBO;
+import lk.ijse.inventorymanagmentsystem.bo.custom.UserBO;
 import lk.ijse.inventorymanagmentsystem.dto.EmployeeDTO;
 import lk.ijse.inventorymanagmentsystem.dto.UserDTO;
-import lk.ijse.inventorymanagmentsystem.model.EmployeeModel;
-import lk.ijse.inventorymanagmentsystem.model.UserModel;
 import lk.ijse.inventorymanagmentsystem.util.Session;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -45,12 +46,13 @@ public class LoginController {
 
     // store the logged-in user ID
     EmployeeDTO eDTO =new EmployeeDTO();
-    UserModel userModel = new UserModel();
+
     UserDTO user = null;
     
     
-    
-    
+    UserBO userBO = (UserBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.USER);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.EMPLOYEE);
+
     @FXML
     public void initialize() {
         loadImage();
@@ -80,23 +82,22 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        System.out.println("Trying login: " + username + " - " + password);
+
         
         if (username.isBlank() || password.isBlank()) {
             new Alert(Alert.AlertType.ERROR, "Username and password cannot be empty!").show();
             return;
         }
 
-        
         try {
-            user = userModel.login(username, password);
+            user = userBO.login(username, password);
             if(user == null){
                 new Alert(Alert.AlertType.ERROR, "Invalid username or password!").show();
                 return;
             }
 
             int currentUserId = user.getUserId();
-            int employeeId = EmployeeModel.getEmployeeIdByUserId(currentUserId);
+            int employeeId = employeeBO.getEmployeeId(currentUserId);
             String role = user.getRole();
 
             if(employeeId == 0){

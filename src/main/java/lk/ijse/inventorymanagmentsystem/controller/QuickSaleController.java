@@ -23,14 +23,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.custom.ItemBO;
+import lk.ijse.inventorymanagmentsystem.bo.custom.RecordSaleBO;
 import lk.ijse.inventorymanagmentsystem.dto.CartItemDTO;
 import lk.ijse.inventorymanagmentsystem.dto.CheckoutDTO;
 import lk.ijse.inventorymanagmentsystem.dto.CustomerDTO;
 import lk.ijse.inventorymanagmentsystem.dto.ItemDTO;
-import lk.ijse.inventorymanagmentsystem.model.ItemModel;
-import lk.ijse.inventorymanagmentsystem.model.ItemViewModel;
-import lk.ijse.inventorymanagmentsystem.model.OrderModel;
-import lk.ijse.inventorymanagmentsystem.model.RecordSalesModel;
+import lk.ijse.inventorymanagmentsystem.util.Reports;
 import lk.ijse.inventorymanagmentsystem.util.Session;
 import net.sf.jasperreports.engine.JRException;
 
@@ -80,8 +80,7 @@ public class QuickSaleController {
     private TableColumn<CartItemDTO , Integer> colCartWarranty;
 
     
-    private final ItemModel itemModel = new ItemModel();
-    private final RecordSalesModel recordSales = new RecordSalesModel();
+
     
     private final ObservableList<ItemDTO> masterItemList = FXCollections.observableArrayList();
 
@@ -105,11 +104,10 @@ public class QuickSaleController {
     @FXML
     private TableColumn<CartItemDTO, Void> colActionCart;
 
-    private final ItemViewModel itemViewModel = new ItemViewModel();
 
-        private  final OrderModel orderModel = new OrderModel() ;
+    RecordSaleBO recordSaleBO = (RecordSaleBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.RECORDSALE);
 
-    
+    ItemBO itemBO =  (ItemBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.ITEM);
     
     @FXML
     public void initialize() {
@@ -245,11 +243,11 @@ public class QuickSaleController {
                 total()
         );
         
-        int result = recordSales.recordsales(checkoutDTO);
+        int result = recordSaleBO.processCheckout(checkoutDTO);
 
         if (result >0) {
             try {
-                orderModel.printInvoice(result);
+                Reports.printInvoice(result);
             } catch (JRException ex) {
                 new Alert(Alert.AlertType.ERROR, "Printing Error!").show();
 
@@ -364,7 +362,7 @@ public class QuickSaleController {
                     
                     
                     
-                    List<ItemDTO> itemDTO = itemModel.searchItem(itemName);
+                    List<ItemDTO> itemDTO = itemBO.searchItem(itemName);
                     
                     
                     if (itemDTO != null) {
@@ -392,7 +390,7 @@ public class QuickSaleController {
     
     private void loadTableDefault(){
         try {
-            List<ItemDTO>  list = itemViewModel.getItems();
+            List<ItemDTO>  list = itemBO.getItems();
             masterItemList.clear();
             masterItemList.addAll(list);
             tblItems.setItems(masterItemList);

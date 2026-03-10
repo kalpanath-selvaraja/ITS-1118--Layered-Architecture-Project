@@ -14,10 +14,10 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import lk.ijse.inventorymanagmentsystem.model.ItemModel;
-import lk.ijse.inventorymanagmentsystem.model.OrderModel;
-import lk.ijse.inventorymanagmentsystem.model.RecordSalesModel;
-import lk.ijse.inventorymanagmentsystem.model.WarrantyModel;
+import lk.ijse.inventorymanagmentsystem.bo.custom.*;
+import lk.ijse.inventorymanagmentsystem.dao.DAOFactory;
+import lk.ijse.inventorymanagmentsystem.entity.Warranty;
+//import lk.ijse.inventorymanagmentsystem.model.WarrantyModel;
 
 /**
  * FXML Controller class
@@ -43,37 +43,34 @@ public class HomeController implements Initializable {
     @FXML
     private LineChart<String, Number> salesChart;
 
-    OrderModel orderModel = new OrderModel();
+    WarrantyBO warrantyBO = (WarrantyBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.WARRANTY);
+    OrderBO orderBO = (OrderBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.ORDER);
+    RecordSaleBO recordSaleBO = (RecordSaleBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.RECORDSALE);
+    ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.ITEM);
 
-    
-    
-    RecordSalesModel recordSalesModel = new RecordSalesModel();
-    WarrantyModel warrantyModel = new WarrantyModel();
-    ItemModel itemModel = new ItemModel();
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
             loadSalesChart();
             
             try {
-                warrantyModel.applyWarrantyStatus();
+                warrantyBO.updateExpiredWarranties();
             } catch (SQLException ex) {
                 new Alert(Alert.AlertType.ERROR, "Database Error in Warranty Status").show();
             }
             
             try {
                 
-                lblTotalSalesAmount.setText(String.valueOf(recordSalesModel.getTotalSales()));
+                lblTotalSalesAmount.setText(String.valueOf(recordSaleBO.getTotalSales()));
             } catch (SQLException ex) {
                 new Alert(Alert.AlertType.ERROR, "Database Error in Warranty Status").show();
                 
             }
-            lblWarrantyClaims.setText(String.valueOf(warrantyModel.claimedWarrantyCount()));
+            lblWarrantyClaims.setText(String.valueOf(warrantyBO.getClaimedWarrantyCount()));
             
-            totalOrders.setText(orderModel.getOrderCount());
-            lowStocks.setText(String.valueOf(itemModel.getLowStocksNumber()));
+            totalOrders.setText(orderBO.getOrderCount());
+            lowStocks.setText(String.valueOf(itemBO.getLowStocksNumber()));
             
         } catch (SQLException ex) {
             System.getLogger(HomeController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
@@ -87,7 +84,7 @@ public class HomeController implements Initializable {
         series.setName("Daily Sales");
 
         try {
-            Map<String, Double> data = orderModel.getDailySales();
+            Map<String, Double> data = orderBO.getDailySales();
 
             for (Map.Entry<String, Double> entry : data.entrySet()) {
                 series.getData().add(

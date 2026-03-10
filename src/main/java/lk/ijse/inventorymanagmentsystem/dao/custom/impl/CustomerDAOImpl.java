@@ -29,7 +29,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public int saveandReturn(Customer cus) throws SQLException {
+    public int saveandReturnId(Customer cus) throws SQLException {
 
         return CrudUtil.executeAndReturnId("INSERT INTO Customer (name, contact) VALUES (?,?)",
                 cus.getName(), cus.getContact());
@@ -77,13 +77,19 @@ public class CustomerDAOImpl implements CustomerDAO {
         return false;
     }
 
-    public int getCustomerId(Customer customer) throws SQLException{
-
-        int cusId = CrudUtil.executeAndReturnId(
-                "SELECT cus_id FROM Customer WHERE contact=?",
-                customer.getContact()
+    @Override
+    public Integer getIdByContact(String contact) throws SQLException {
+        ResultSet rs = CrudUtil.execute(
+                "SELECT cus_id FROM Customer WHERE contact = ?",
+                contact
         );
 
-        return cusId;
+        if (rs.next()) {
+            return rs.getInt("cus_id");
+        }
+
+        return null;
     }
+
+
 }

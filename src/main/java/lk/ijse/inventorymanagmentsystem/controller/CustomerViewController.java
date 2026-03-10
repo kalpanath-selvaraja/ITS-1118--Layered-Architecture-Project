@@ -9,9 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
@@ -22,10 +20,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
 import lk.ijse.inventorymanagmentsystem.bo.custom.CustomerBO;
 import lk.ijse.inventorymanagmentsystem.dao.DAOFactory;
 import lk.ijse.inventorymanagmentsystem.dto.CustomerDTO;
-import lk.ijse.inventorymanagmentsystem.model.CustomerModel;
 import lk.ijse.inventorymanagmentsystem.util.Navigation;
 //import lk.ijse.inventorymanagmentsystem.model.CustomerModel;
 
@@ -51,9 +49,8 @@ public class CustomerViewController implements Initializable {
     @FXML
     private TableView<CustomerDTO> tableCustomer;
 
-    
-    private static final CustomerModel customerModel = new CustomerModel();
-    
+
+
     @FXML
     private TableColumn <CustomerDTO, Number> colId;
     
@@ -78,10 +75,8 @@ public class CustomerViewController implements Initializable {
     @FXML
     private AnchorPane customerPane;
 
-    CustomerBO customerBO = (CustomerBO) DAOFactory.getInstance().getDAOTypes(DAOFactory.DAOTypes.CUSTOMER);
-    
-    
-    //String FXML = "/lk/ijse/inventorymanagmentsystem/CustomerUpdate.fxml";
+    private final CustomerBO customerBO= (CustomerBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.CUSTOMER);
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -125,7 +120,7 @@ public class CustomerViewController implements Initializable {
                             
                             
 
-                            System.out.println("Selected: " + cusDTO.getName());
+
                             
                             
                         }   
@@ -168,11 +163,11 @@ public class CustomerViewController implements Initializable {
                 CustomerDTO cusDTO = new CustomerDTO(name, String.valueOf(contact));
 
 
-                int isSaved = customerModel.saveCustomer(cusDTO);
+                int isSaved = customerBO.saveCustomer(cusDTO);
 
                 if(isSaved != -1  ){
 
-                    System.out.println("Customer Saved Succsefully");
+
 
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
@@ -184,7 +179,7 @@ public class CustomerViewController implements Initializable {
 
                 }else{
 
-                    System.out.println("Sorry Something Went Wrong !!!!");
+
 
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
@@ -213,7 +208,7 @@ public class CustomerViewController implements Initializable {
             } else {
                 try {
                 
-                    CustomerDTO cusDTO = customerModel.searchCustomer(cuscontact);
+                    CustomerDTO cusDTO = customerBO.searchCustomer(cuscontact);
 
                     if(cusDTO != null){
                            updateCustomerTable(cusDTO);
@@ -257,7 +252,6 @@ public class CustomerViewController implements Initializable {
                 obList.add(customerDTO);
             }
             tableCustomer.setItems(obList);
-            System.out.println(customerList.size());
         } catch(Exception e) {
             e.printStackTrace();
         }

@@ -27,8 +27,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.custom.ItemBO;
 import lk.ijse.inventorymanagmentsystem.dto.ItemDTO;
-import lk.ijse.inventorymanagmentsystem.model.ItemViewModel;
 import lk.ijse.inventorymanagmentsystem.util.Navigation;
 
 /**
@@ -86,9 +87,11 @@ public class ItemViewController implements Initializable {
     
     private final String CUSTOMER_NAME_REGEX = "^[a-zA-Z]*$";
 
-   
 
-    private final ItemViewModel itemViewModel = new ItemViewModel();
+
+    ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.ITEM);
+
+
     
     private  Button currentlySelectedButton = null;
     private static ItemDTO selectedItem = null;
@@ -223,7 +226,7 @@ public class ItemViewController implements Initializable {
                     
                     
                     
-                    List<ItemDTO> ivDTO = itemViewModel.searchItem(Name);
+                    List<ItemDTO> ivDTO = itemBO.searchItem(Name);
                     
                     
                     if (ivDTO != null) {
@@ -243,7 +246,7 @@ public class ItemViewController implements Initializable {
     
     private void loadItems() {
         try {
-            List<ItemDTO> itemList = itemViewModel.getItems();
+            List<ItemDTO> itemList = itemBO.getItems();
             masterItemList.setAll(itemList);
             itemTable.setItems(masterItemList);
         } catch (Exception e) {
@@ -303,7 +306,7 @@ public class ItemViewController implements Initializable {
 
         ObservableList<ItemDTO> list = itemTable.getItems();  // cheks by the loaded Table
         
-        System.out.println("  ----   ");
+
 
         if (list == null) {
             list = FXCollections.observableArrayList();

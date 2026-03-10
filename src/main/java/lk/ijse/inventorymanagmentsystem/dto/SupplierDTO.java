@@ -4,6 +4,10 @@
  */
 package lk.ijse.inventorymanagmentsystem.dto;
 
+import lk.ijse.inventorymanagmentsystem.entity.Supplier;
+
+import java.util.List;
+
 /**
  *
  * @author kalpanath
@@ -34,6 +38,26 @@ public class SupplierDTO {
         this.email = email;
         this.contact = contact;
     }
+
+    public SupplierDTO(List<Supplier> suppliersList) {
+        this.supplier_id = suppliersList.get(0).getSupplier_id();
+        this.supplier_name = suppliersList.get(0).getSupplier_name();
+        this.email = suppliersList.get(0).getEmail();
+        this.contact = suppliersList.get(0).getContact();
+    }
+
+    public SupplierDTO(Supplier supplier) {
+        this.supplier_id = supplier.getSupplier_id();
+        this.supplier_name = supplier.getSupplier_name();
+        this.email = supplier.getEmail();
+        this.contact = supplier.getContact();
+    }
+
+//    public SupplierDTO(Supplier supplier) {
+//        this.supplier_name = supplier.getSupplier_name();
+//        this.email = supplier.getEmail();
+//        this.contact = supplier.getContact();
+//    }
 
     public int getSupplier_id() {
         return supplier_id;

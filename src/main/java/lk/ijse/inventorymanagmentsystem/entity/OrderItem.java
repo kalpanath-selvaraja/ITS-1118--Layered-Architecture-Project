@@ -1,5 +1,7 @@
 package lk.ijse.inventorymanagmentsystem.entity;
 
+import lk.ijse.inventorymanagmentsystem.dto.OrderItemDTO;
+
 public class OrderItem {
 
     private int orderID;
@@ -26,7 +28,13 @@ public class OrderItem {
         this.unitPrice = unitPrice;
     }
 
-
+    public OrderItem(OrderItemDTO orderItemDTO) {
+        this.orderID = orderItemDTO.getOrderID();
+        this.itemID = orderItemDTO.getItemID();
+        this.quantity = orderItemDTO.getQuantity();
+        this.unitPrice = orderItemDTO.getUnitPrice();
+        this.warranty = orderItemDTO.getWarranty();
+    }
 
 
     public int getOrderID() {

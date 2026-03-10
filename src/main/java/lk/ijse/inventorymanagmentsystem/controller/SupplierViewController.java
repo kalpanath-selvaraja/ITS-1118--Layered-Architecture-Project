@@ -23,8 +23,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.custom.SupplierBO;
 import lk.ijse.inventorymanagmentsystem.dto.SupplierDTO;
-import lk.ijse.inventorymanagmentsystem.model.SupplierModel;
 import lk.ijse.inventorymanagmentsystem.util.Navigation;
 
 /**
@@ -69,7 +70,7 @@ public class SupplierViewController implements Initializable {
     
     private final String CUSTOMER_NAME_REGEX = "^[a-zA-Z]*$";
     
-    private final SupplierModel spModel = new SupplierModel();
+
     
     private final ObservableList<SupplierDTO> masterSupplierList = FXCollections.observableArrayList();
     
@@ -78,6 +79,7 @@ public class SupplierViewController implements Initializable {
     
     SupplierDTO supDTO ;
 
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.SUPPLIER);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -173,7 +175,7 @@ public class SupplierViewController implements Initializable {
             }else{
                 try{
                     
-                    List<SupplierDTO> supDTO = spModel.searchSupplier(sup_Name);
+                    List<SupplierDTO> supDTO = supplierBO.searchSupplier(sup_Name);
                     
                     if(supDTO.isEmpty()){
                         new Alert(Alert.AlertType.ERROR,"No Such supplier exits. Please try again.").show();
@@ -188,6 +190,8 @@ public class SupplierViewController implements Initializable {
             }
         }
     }
+
+
     
     public void loadTable(List<SupplierDTO> supDTO){
 
@@ -198,7 +202,7 @@ public class SupplierViewController implements Initializable {
     
     private void loadTableDefault() throws SQLException{
         
-        List<SupplierDTO>  dto = spModel.getSupplier();
+        List<SupplierDTO>  dto = supplierBO.getAllSuppliers();
             
         masterSupplierList.clear();
         masterSupplierList.addAll(dto);
@@ -236,6 +240,10 @@ public class SupplierViewController implements Initializable {
     
     @FXML
     private void updateSupplier(){
+        if(selectedSupplier == null){
+            new Alert(Alert.AlertType.ERROR,"Select supplier to update.").show();
+            return;
+        }
         SupplierManagmentController controller ;
         try {
             controller = Navigation.loadWithController(
@@ -255,6 +263,10 @@ public class SupplierViewController implements Initializable {
     
     @FXML 
     private void deleteSupplier()  {
+        if(selectedSupplier == null){
+            new Alert(Alert.AlertType.ERROR,"Select supplier to delete.").show();
+            return;
+        }
         try {
             SupplierManagmentController controller = Navigation.loadWithController(
                 contentPane,

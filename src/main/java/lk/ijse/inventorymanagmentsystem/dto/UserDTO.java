@@ -4,6 +4,8 @@
  */
 package lk.ijse.inventorymanagmentsystem.dto;
 
+import lk.ijse.inventorymanagmentsystem.entity.User;
+
 /**
  *
  * @author kalpanath
@@ -42,6 +44,13 @@ public class UserDTO {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public UserDTO(User user) {
+        this.userId = user.getUserId();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.role = user.getRole();
     }
 
     public int getUserId() {

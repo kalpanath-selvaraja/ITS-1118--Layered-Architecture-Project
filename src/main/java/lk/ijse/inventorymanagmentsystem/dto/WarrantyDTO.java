@@ -4,6 +4,8 @@
  */
 package lk.ijse.inventorymanagmentsystem.dto;
 
+import lk.ijse.inventorymanagmentsystem.entity.Warranty;
+
 /**
  *
  * @author kalpanath
@@ -12,7 +14,7 @@ public class WarrantyDTO {
     int warrantyId;
     int months;
     
-    
+    // For warranty details of an item
     String orderItemId;
     String orderId;
     String date;
@@ -37,9 +39,17 @@ public class WarrantyDTO {
         this.name = name;
     }
 
-   
+    public WarrantyDTO(Warranty w) {
+        this.orderItemId = w.getOrderItemId();
+        this.orderId = w.getOrderId();
+        this.date = w.getDate();
+        this.unitprice = w.getUnitprice();
+        this.status = w.getStatus();
+        this.name = w.getName();
+        this.months = w.getMonths();
 
-    
+    }
+
 
     public String getOrderItemId() {
         return orderItemId;

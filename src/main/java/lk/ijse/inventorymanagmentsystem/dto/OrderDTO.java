@@ -4,6 +4,8 @@
  */
 package lk.ijse.inventorymanagmentsystem.dto;
 
+import lk.ijse.inventorymanagmentsystem.entity.Order;
+
 import java.sql.Timestamp;
 
 /**
@@ -46,6 +48,14 @@ public class OrderDTO {
         this.empid = empid;
         this.dateTime = dateTime;
         this.total = total;
+    }
+
+    public OrderDTO(Order returnedOrder) {
+        this.orderId = returnedOrder.getOrderId();
+        this.cusid = returnedOrder.getCusid();
+        this.empid = returnedOrder.getEmpid();
+        this.dateTime = returnedOrder.getDateTime();
+        this.total = returnedOrder.getTotal();
     }
 
     public Integer getOrderId() {

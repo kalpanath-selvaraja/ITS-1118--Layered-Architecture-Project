@@ -69,7 +69,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         );
     }
 
-    public int checkUSerId(int id) throws SQLException{
+    public int checkUserId(int id) throws SQLException{
         ResultSet rs = CrudUtil.execute("SELECT user_id FROM Employee WHERE user_id = ?", id);
 
         int result = -1;

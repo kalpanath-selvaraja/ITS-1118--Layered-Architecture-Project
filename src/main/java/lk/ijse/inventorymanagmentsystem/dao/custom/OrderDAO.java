@@ -19,13 +19,17 @@ import java.util.Map;
 
 public interface OrderDAO extends CrudDAO<Order> {
 
-    public List<Order> searchItem(int order_id)throws SQLException;
+    public List<Order> search(int order_id)throws SQLException;
 
-    public void printReport()throws SQLException , JRException;
+//    public void printReport()throws SQLException , JRException;
+//
+//    public void printInvoice (int orderId) throws SQLException , JRException;
 
-    public void printInvoice (int orderId) throws SQLException , JRException;
-
-    public String getOrderCount () throws SQLException;
+    public String getCount () throws SQLException;
 
     public Map<String, Double> getDailySales() throws SQLException ;
+
+    public int saveAndReturn(Order order) throws SQLException;
+
+    double getTotalSales() throws SQLException;
 }

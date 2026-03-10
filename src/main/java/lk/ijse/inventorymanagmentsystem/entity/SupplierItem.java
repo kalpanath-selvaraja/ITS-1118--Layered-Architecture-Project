@@ -12,6 +12,10 @@ public class SupplierItem {
         this.item_id = item_id;
     }
 
+    public SupplierItem(Supplier supplier) {
+        this.supplier_id = supplier.getSupplier_id();
+    }
+
     public int getSupplier_id() {
         return supplier_id;
     }

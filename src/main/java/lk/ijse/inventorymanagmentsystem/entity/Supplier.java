@@ -1,5 +1,7 @@
 package lk.ijse.inventorymanagmentsystem.entity;
 
+import lk.ijse.inventorymanagmentsystem.dto.SupplierDTO;
+
 public class Supplier {
     private int supplier_id ;
     private String supplier_name;
@@ -15,6 +17,15 @@ public class Supplier {
         this.email = email;
         this.contact = contact;
     }
+
+    public Supplier(SupplierDTO supDTO) {
+        this.supplier_id = supDTO.getSupplier_id();
+        this.supplier_name = supDTO.getSupplier_name();
+        this.email = supDTO.getEmail();
+        this.contact = supDTO.getContact();
+    }
+
+
 
     public int getSupplier_id() {
         return supplier_id;

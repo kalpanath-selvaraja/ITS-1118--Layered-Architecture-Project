@@ -19,12 +19,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.custom.ItemBO;
+import lk.ijse.inventorymanagmentsystem.bo.custom.SupplierBO;
+import lk.ijse.inventorymanagmentsystem.bo.custom.WarrantyBO;
 import lk.ijse.inventorymanagmentsystem.dto.ItemDTO;
 import lk.ijse.inventorymanagmentsystem.dto.SupplierDTO;
 import lk.ijse.inventorymanagmentsystem.dto.WarrantyDTO;
-import lk.ijse.inventorymanagmentsystem.model.ItemViewModel;
-import lk.ijse.inventorymanagmentsystem.model.SupplierModel;
-import lk.ijse.inventorymanagmentsystem.model.WarrantyModel;
+
 import lk.ijse.inventorymanagmentsystem.util.Navigation;
 
 /**
@@ -40,7 +42,10 @@ public class ItemManageController {
     
     @FXML
     private Label lblUpdate;
-    
+
+    @FXML
+    private Label lblDelete;
+
     @FXML
     private TableView<SupplierDTO> supplierTable;
 
@@ -83,17 +88,13 @@ public class ItemManageController {
     private Button btnDelete;
     
     private int currentSupplierID;
-    
-     
      int warrantyId  ;
-
-    SupplierModel supplierModel = new SupplierModel();
-    
     private Button currentlySelectedButton = null;
     private SupplierDTO selectedNewSupplier = null;
-    
-    ItemViewModel itemViewModel = new ItemViewModel();
-    WarrantyModel warrantyModel = new WarrantyModel();
+
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.SUPPLIER);
+    WarrantyBO warrantyBO = (WarrantyBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.WARRANTY);
+    ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.ITEM);
     
     @FXML
     public void initialize() throws SQLException{
@@ -169,7 +170,7 @@ public class ItemManageController {
         
         
         try {
-            currentSupplierID = supplierModel.getSupplierID(selectedItem.getSupplierName());
+            currentSupplierID = supplierBO.getSupplierIdByName(selectedItem.getSupplierName());
           
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, "Failed to load supplier info: " + ex.getMessage()).show();
@@ -181,11 +182,9 @@ public class ItemManageController {
     }
     
 
-
-
     public void loadSuppliers() throws SQLException {
         supplierList.clear();
-        supplierList.addAll(supplierModel.getSupplier());
+        supplierList.addAll(supplierBO.getAllSuppliers());
         supplierTable.setItems(supplierList);
         
     }
@@ -233,7 +232,7 @@ public class ItemManageController {
         boolean warrantyMatched = false;
         if (warrantyValue > 0) {
             try {
-                List<WarrantyDTO> wDTO = warrantyModel.getWarrantyMonths();
+                List<WarrantyDTO> wDTO = warrantyBO.getWarrantyMonths();
 
                 for (WarrantyDTO dto : wDTO) {
                     if (dto.getMonths() == warrantyValue) {
@@ -275,7 +274,7 @@ public class ItemManageController {
         
         
         try{
-          warrantyId =  itemViewModel.getWarrantyIdByMonths(warrantyValue);
+          warrantyId =  itemBO.getWarrantyId(warrantyValue);
           
            
         
@@ -285,11 +284,13 @@ public class ItemManageController {
         }
         
        try {
-            boolean result = itemViewModel.updateItems(itemDTO,warrantyId);
+            boolean result = itemBO.updateItems(itemDTO,warrantyId);
             if(result){
                 new Alert(Alert.AlertType.INFORMATION, "Item updated successfully!").show();
+                back();
             } else {
                 new Alert(Alert.AlertType.WARNING, "Item update failed!").show();
+                back();
             }
         } catch (SQLException ex) {
            new Alert(Alert.AlertType.ERROR, "Database error: ").show();
@@ -340,13 +341,13 @@ public class ItemManageController {
 
         if (warrantyValue > 0) {
             try {
-                List<WarrantyDTO> wDTO = warrantyModel.getWarrantyMonths();
+                List<WarrantyDTO> wDTO = warrantyBO.getWarrantyMonths();
 
                 for (WarrantyDTO dto : wDTO) {
                     if (dto.getMonths() == warrantyValue) {
                         // MATCH FOUND
                         warrantyMatched = true;
-                        System.out.println(dto.getMonths());
+
                         break;
                     }
                 }
@@ -364,24 +365,26 @@ public class ItemManageController {
                     price,
                     warrantyValue,selectedNewSupplier.getSupplier_id());
         }else{
-            new Alert(Alert.AlertType.ERROR, "Sorry Please USE 3 , 6 , 12 for Warranty").show();
+            new Alert(Alert.AlertType.ERROR, "Sorry Please USE 3 , 6 , 12 , 24, 36 ,48 or 60 for Warranty").show();
             return;
         }
         
         
         try {
-            warrantyId =  itemViewModel.getWarrantyIdByMonths(itemDTO.getWarranty());
+            warrantyId =  itemBO.getWarrantyId(itemDTO.getWarranty());
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, "Database Error").show();
             
         }
         
         try {
-            boolean result = itemViewModel.addItems(itemDTO,warrantyId);
+            boolean result = itemBO.save(itemDTO,warrantyId);
             if(result){
                 new Alert(Alert.AlertType.INFORMATION, "Item Was Added successfully!").show();
+                back();
             } else {
                 new Alert(Alert.AlertType.WARNING, "Item Adding wad failed!").show();
+                back();
             }
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, "Database error: " + ex.getMessage()).show();

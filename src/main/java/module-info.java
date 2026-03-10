@@ -9,7 +9,9 @@ module lk.ijse.inventorymanagmentsystem {
 
     // MySQL Connector/J 9.5.0
     requires mysql.connector.j;
-    requires lk.ijse.inventorymanagmentsystem;
+    requires java.desktop;
+    requires javafx.graphics;
+//    requires lk.ijse.inventorymanagmentsystem;
 //    requires lk.ijse.inventorymanagmentsystem;
 //    requires lk.ijse.inventorymanagmentsystem;
 //    requires lk.ijse.inventorymanagmentsystem;

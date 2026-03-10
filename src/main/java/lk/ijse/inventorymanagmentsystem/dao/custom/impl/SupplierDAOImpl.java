@@ -91,8 +91,8 @@ public class SupplierDAOImpl implements SupplierDAO {
     }
 
     @Override
-    public void delete(int supplierId) throws SQLException {
-        CrudUtil.execute("DELETE FROM Supplier WHERE supplier_id = ?", supplierId);
+    public boolean delete(int supplierId) throws SQLException {
+        return CrudUtil.execute("DELETE FROM Supplier WHERE supplier_id = ?", supplierId);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class SupplierDAOImpl implements SupplierDAO {
     }
 
     @Override
-    public boolean getContact(String contact) throws SQLException {
+    public boolean existsByContact(String contact) throws SQLException {
         ResultSet result = CrudUtil.execute("SELECT contact FROM Supplier WHERE contact = ? ", contact);
         return result.next();
     }

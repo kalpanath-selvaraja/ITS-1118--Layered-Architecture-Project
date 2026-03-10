@@ -4,6 +4,8 @@
  */
 package lk.ijse.inventorymanagmentsystem.dto;
 
+import lk.ijse.inventorymanagmentsystem.entity.Customer;
+
 /**
  *
  * @author kalpanath
@@ -37,8 +39,14 @@ public class CustomerDTO {
         this.contact = contact;
 
     }
-    
-    
+
+    public CustomerDTO(Customer customer) {
+        this.id = customer.getId();
+        this.name = customer.getName();
+        this.contact = customer.getContact();
+
+    }
+
 
     public int getId() {
         return id;

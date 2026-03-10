@@ -1,5 +1,7 @@
 package lk.ijse.inventorymanagmentsystem.entity;
 
+import lk.ijse.inventorymanagmentsystem.dto.EmployeeDTO;
+
 public class Employee {
     private int employeeID;
     private String empName;
@@ -14,6 +16,14 @@ public class Employee {
         this.empName = empName;
         this.empContact = empContact;
         this.empUserId = empUserId;
+    }
+
+    public Employee(EmployeeDTO employeeDTO) {
+        this.employeeID = employeeDTO.getEmployeeID();
+        this.empName = employeeDTO.getEmpName();
+        this.empContact = employeeDTO.getEmpContact();
+        this.empUserId = employeeDTO.getEmpUserId();
+
     }
 
     public int getEmployeeID() {

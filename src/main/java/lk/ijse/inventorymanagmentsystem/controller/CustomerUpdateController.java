@@ -13,10 +13,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
 import lk.ijse.inventorymanagmentsystem.bo.custom.CustomerBO;
+import lk.ijse.inventorymanagmentsystem.dao.DAOFactory;
 import lk.ijse.inventorymanagmentsystem.dto.CustomerDTO;
-import lk.ijse.inventorymanagmentsystem.dto.ItemDTO;
-import lk.ijse.inventorymanagmentsystem.model.CustomerModel;
+
 import lk.ijse.inventorymanagmentsystem.util.Navigation;
 
 /**
@@ -42,7 +43,7 @@ public class CustomerUpdateController implements Initializable {
     
         
 //    private final CustomerBO cusBO =
-    private final CustomerModel customerModel = new CustomerModel();
+    private final CustomerBO customerBO= (CustomerBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.CUSTOMER);
     
     private final String CUSTOMER_NAME_REGEX =  "^[A-Za-z '-]{3,}$"; 
     private final String CUSTOMER_CONTACT_REGEX = "^[0-9]{10}$";
@@ -99,7 +100,7 @@ public class CustomerUpdateController implements Initializable {
         }
 
         try {
-            boolean result = customerModel.updateCustomer(new CustomerDTO(customerId , name, contact ));
+            boolean result = customerBO.updateCustomer(new CustomerDTO(customerId , name, contact ));
             if(result){
                 new Alert(Alert.AlertType.INFORMATION, "Customer details updated successfully!").show();
                 

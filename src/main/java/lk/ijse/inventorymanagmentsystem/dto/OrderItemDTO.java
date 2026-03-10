@@ -4,6 +4,8 @@
  */
 package lk.ijse.inventorymanagmentsystem.dto;
 
+import lk.ijse.inventorymanagmentsystem.entity.OrderItem;
+
 /**
  *
  * @author kalpanath
@@ -32,8 +34,15 @@ public class OrderItemDTO {
         this.quantity = quantity;
         this.unitPrice = unitPrice;
     }
-    
-    
+
+    public OrderItemDTO(OrderItem orderItem) {
+        this.orderID = orderItem.getOrderID();
+        this.itemID = orderItem.getItemID();
+        this.quantity = orderItem.getQuantity();
+        this.unitPrice = orderItem.getUnitPrice();
+
+    }
+
 
     public int getOrderID() {
         return orderID;

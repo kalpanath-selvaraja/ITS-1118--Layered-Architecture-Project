@@ -79,7 +79,7 @@ public class ItemDAOImpl implements ItemDAO {
             int warranty  =rs.getInt("months");
             int qty = rs.getInt("quantity");
 
-            Item item = new Item(itemID, name, qty, price,warranty);
+            Item item = new Item(itemID, name, price,qty ,warranty);
             itemList.add(item);
         }
 
@@ -87,10 +87,12 @@ public class ItemDAOImpl implements ItemDAO {
 
     }
 
+
+
     public boolean decreseItemQty(int itemId, int qty) throws SQLException {
         boolean result = CrudUtil.execute("UPDATE Item SET quantity = quantity - ? WHERE item_id = ? AND quantity >= ?", qty, itemId, qty);
         return result;
-    }
+    }//
 
 
     public int getLowStocksNumber() throws SQLException{
@@ -100,91 +102,23 @@ public class ItemDAOImpl implements ItemDAO {
 
         if(rs.next()){
             qty = rs.getInt("Low_Stock");
-            System.out.println(qty);
+
 
             return qty;
         }
 
         return qty;
-    }
+    }//
 
-/// ///////////////////////////////////////////////////////////////////
+
+
+    /// ///////////////////////////////////////////////////////////////////
 ///
 ///
 
-    public List<Item> searchItem(String itemName)throws SQLException{
-
-        ResultSet rs = CrudUtil.execute(
 
 
-                "SELECT i.item_id, " +
-                        "i.name , " +
-                        "i.unit_price, " +
-                        "i.quantity, " +
-                        "w.months AS WarrantyMonths, " +
-                        "s.name AS SupplierName " +  // no comma here
-                        "FROM Item i " +
-                        "LEFT JOIN Warranty w ON i.warranty_id = w.warranty_id " +
-                        "LEFT JOIN SupplierItem si ON i.item_id = si.item_id " +
-                        "LEFT JOIN Supplier s ON si.supplier_id = s.supplier_id " +
-                        "WHERE i.name LIKE ?",
-                "%" + itemName + "%"
-        );
-
-
-
-        List<Item> items = new ArrayList<>();
-
-
-        while(rs.next()){
-            int itemId = rs.getInt("item_id");
-            String itName = rs.getString("name");
-            int quantity = rs.getInt("quantity");
-            int unitPrice = rs.getInt("unit_price");
-            int months = rs.getInt("WarrantyMonths");
-            String supName = rs.getString("SupplierName");
-
-            items.add( new Item(itemId,itName, quantity,unitPrice,months,supName));
-        }
-        return items;
-    }
-
-
-    public List<Item> getItemsView()throws SQLException{
-
-
-        ResultSet rs = CrudUtil.execute(
-                "SELECT i.item_id, " +
-                        "i.name , " +
-                        "i.unit_price, " +
-                        "i.quantity, " +
-                        "w.months AS WarrantyMonths, " +
-                        "s.name AS SupplierName " +  // no comma here
-                        "FROM Item i " +
-                        "LEFT JOIN Warranty w ON i.warranty_id = w.warranty_id " +
-                        "LEFT JOIN SupplierItem si ON i.item_id = si.item_id " +
-                        "LEFT JOIN Supplier s ON si.supplier_id = s.supplier_id "
-        );
-
-
-        List<Item> itemList = new ArrayList();
-
-        while(rs.next()){
-            int itemId = rs.getInt("item_id");
-            String itName = rs.getString("name");
-            int quantity = rs.getInt("quantity");
-            int unitPrice = rs.getInt("unit_price");
-            int months = rs.getInt("WarrantyMonths");
-            String supName = rs.getString("SupplierName");
-
-            Item item =  new Item(itemId,itName, quantity,unitPrice,months,supName);
-            itemList.add(item);
-        }
-
-        return itemList;
-
-    }
-
+    @Override
     public int getWarrantyIdByMonths(int months) throws SQLException {
 
         ResultSet rs = CrudUtil.execute("SELECT warranty_id FROM Warranty WHERE months = ?", months);
@@ -192,10 +126,11 @@ public class ItemDAOImpl implements ItemDAO {
             return rs.getInt("warranty_id");
         }
         return 0;
-    }
+    }//
 
 
-    public boolean updateItems(ItemDTO itemDTO , int warrantyId) throws SQLException{
+    @Override
+    public boolean updateItems(Item item , int warrantyId) throws SQLException{
 
         Object warrantyParam = (warrantyId == 0) ? null : warrantyId;
 
@@ -206,26 +141,27 @@ public class ItemDAOImpl implements ItemDAO {
                         + "warranty_id = ? "
                         + "WHERE item_id = ?",
 
-                itemDTO.getItemName(),
-                itemDTO.getUnitPrice(),
-                itemDTO.getQuantity(),
+                item.getItemName(),
+                item.getUnitPrice(),
+                item.getQuantity(),
                 warrantyParam,
-                itemDTO.getItemId()
+                item.getItemId()
         );
 
-
-        CrudUtil.execute(
-                "INSERT INTO "
-                        + "SupplierItem (supplier_id, item_id) "
-                        + "VALUES (? , ?) "
-                        + "ON DUPLICATE KEY UPDATE supplier_id = ?;" , itemDTO.getSupplierId() ,
-                itemDTO.getItemId(),     itemDTO.getSupplierId());
-
+//
+//        CrudUtil.execute(
+//                "INSERT INTO "
+//                        + "SupplierItem (supplier_id, item_id) "
+//                        + "VALUES (? , ?) "
+//                        + "ON DUPLICATE KEY UPDATE supplier_id = ?;" , item.getSupplierId() ,
+//                item.getItemId(),     item.getSupplierId());
+//
         return result;
 
-    }
+    }//
 
-    public boolean addItems(ItemDTO itemDTO, int warrantyId) throws SQLException {
+    @Override
+    public int addItems(ItemDTO itemDTO, int warrantyId) throws SQLException {
 
         Object warrantyParam = (warrantyId == 0) ? null : warrantyId;
 
@@ -238,22 +174,22 @@ public class ItemDAOImpl implements ItemDAO {
                 itemDTO.getQuantity(),
                 warrantyParam
         );
-        boolean Added = false;
-        if(result != -1 ){
-            Added = CrudUtil.execute(
-                    "INSERT INTO SupplierItem (supplier_id, item_id) "
-                            + "VALUES (?, ?) "
-                            + "ON DUPLICATE KEY UPDATE supplier_id = ?",
+//        boolean Added = false;
+//        if(result != -1 ){
+//            Added = CrudUtil.execute(
+//                    "INSERT INTO SupplierItem (supplier_id, item_id) "
+//                            + "VALUES (?, ?) "
+//                            + "ON DUPLICATE KEY UPDATE supplier_id = ?",
+//
+//                    itemDTO.getSupplierId(),
+//                    result,
+//                    itemDTO.getSupplierId()
+//            );
+//        }
 
-                    itemDTO.getSupplierId(),
-                    result,
-                    itemDTO.getSupplierId()
-            );
-        }
 
 
-
-        return Added;
+        return result;
     }
 
 

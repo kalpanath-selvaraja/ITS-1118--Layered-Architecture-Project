@@ -4,6 +4,8 @@
  */
 package lk.ijse.inventorymanagmentsystem.dto;
 
+import lk.ijse.inventorymanagmentsystem.entity.Employee;
+
 /**
  *
  * @author kalpanath
@@ -30,6 +32,14 @@ public class EmployeeDTO {
         this.empName = empName;
         this.empContact = empContact;
         this.empUserId = empUserId;
+    }
+
+    public EmployeeDTO(Employee employee) {
+        this.employeeID = employee.getEmployeeID();
+        this.empName = employee.getEmpName();
+        this.empContact = employee.getEmpContact();
+        this.empUserId = employee.getEmpUserId();
+
     }
 
     public String getEmpName() {

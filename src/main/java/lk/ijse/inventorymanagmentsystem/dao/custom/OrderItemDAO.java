@@ -8,4 +8,12 @@ import java.util.ArrayList;
 
 public interface OrderItemDAO extends CrudDAO<OrderItem> {
     public ArrayList<OrderItem> getItemsByOrderId(int orderId) throws SQLException ;
+
+    boolean updateWarrantyStatus(int orderId, String status) throws SQLException;
+
+    public boolean UpdateWarranty(String orderItemId) throws SQLException;
+
+    public String getWarrantyStatus(String orderItemId) throws SQLException;
+
+    public int claimedWarrantyCount() throws SQLException;
 }

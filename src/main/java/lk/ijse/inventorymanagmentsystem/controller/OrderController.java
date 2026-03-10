@@ -22,11 +22,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import lk.ijse.inventorymanagmentsystem.dto.CustomerDTO;
-import lk.ijse.inventorymanagmentsystem.dto.ItemDTO;
+import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.custom.OrderBO;
 import lk.ijse.inventorymanagmentsystem.dto.OrderDTO;
-import lk.ijse.inventorymanagmentsystem.model.CustomerModel;
-import lk.ijse.inventorymanagmentsystem.model.OrderModel;
+import lk.ijse.inventorymanagmentsystem.util.Reports;
 
 /**
  * FXML Controller class
@@ -56,7 +55,7 @@ public class OrderController implements Initializable{
     private TableColumn<OrderDTO, Double> total;      
 
     
-    private final OrderModel orderModel = new OrderModel();
+    OrderBO orderBO = (OrderBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.ORDER);
     
     private final String ORDER_ID_REGEX = "^[0-9]*$";
 
@@ -68,7 +67,7 @@ public class OrderController implements Initializable{
         orderId.setCellValueFactory(new PropertyValueFactory<>("orderId"));
         cusId.setCellValueFactory(new PropertyValueFactory<>("cusid"));
         empId.setCellValueFactory(new PropertyValueFactory<>("empid"));
-        dateandTime.setCellValueFactory(new PropertyValueFactory<>("DateTime"));
+        dateandTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         total.setCellValueFactory(new PropertyValueFactory<>("total"));
         lordOrderTable();
     }
@@ -85,7 +84,7 @@ public class OrderController implements Initializable{
                     
                     
                     
-                    List<OrderDTO> oDTO = orderModel.searchItem(Integer.parseInt(order_id));
+                    List<OrderDTO> oDTO = orderBO.search(Integer.parseInt(order_id));
                     
                     
                     if (oDTO != null) {
@@ -109,7 +108,7 @@ public class OrderController implements Initializable{
 
         ObservableList<OrderDTO> list = tabelOrder.getItems();
         
-        System.out.println("  ----   ");
+
 
         if (list == null) {
             list = FXCollections.observableArrayList();
@@ -124,7 +123,7 @@ public class OrderController implements Initializable{
         try {
         
             
-            List<OrderDTO> customerList = orderModel.getAllOrders();
+            List<OrderDTO> customerList = orderBO.getAll();
             
             ObservableList<OrderDTO> obList = FXCollections.observableArrayList();
             
@@ -142,7 +141,7 @@ public class OrderController implements Initializable{
     @FXML
     private void handleprint(ActionEvent event){
         try{
-            orderModel.printReport();
+            Reports.printReport();
         }catch(Exception e){
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error").show();

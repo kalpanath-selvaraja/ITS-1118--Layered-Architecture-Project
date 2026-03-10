@@ -3,6 +3,7 @@ package lk.ijse.inventorymanagmentsystem.dao.custom.impl;
 import lk.ijse.inventorymanagmentsystem.dao.CrudUtil;
 import lk.ijse.inventorymanagmentsystem.dao.custom.SupplierItemDAO;
 import lk.ijse.inventorymanagmentsystem.dto.ItemDTO;
+import lk.ijse.inventorymanagmentsystem.entity.Item;
 import lk.ijse.inventorymanagmentsystem.entity.SupplierItem;
 
 import java.sql.ResultSet;
@@ -11,14 +12,17 @@ import java.util.List;
 
 public class SupplierItemDAOImpl implements SupplierItemDAO {
     @Override
+
     public boolean SupplierItemCount(int supplierId) throws SQLException {
         // Count items linked to this supplier
+
         ResultSet rs = CrudUtil.execute(
                 "SELECT COUNT(*) AS total FROM SupplierItem WHERE supplier_id = ?", supplierId
         );
 
         if (rs.next()) {
             int count = rs.getInt("total");
+
             return count > 0;  // true if there are items
         }
 
@@ -26,9 +30,9 @@ public class SupplierItemDAOImpl implements SupplierItemDAO {
     }
 
     @Override
-    public boolean saveSupplierItem(int supplierId,List<ItemDTO> cartItems) throws SQLException {
+    public boolean saveItem(int supplierId, List<Item> cartItems) throws SQLException {
         try{
-            for(ItemDTO item : cartItems) {
+            for(Item item : cartItems) {
                 CrudUtil.execute(
                         "INSERT INTO SupplierItem(supplier_id, item_id) VALUES(?, ?)",
                         supplierId,
@@ -40,6 +44,17 @@ public class SupplierItemDAOImpl implements SupplierItemDAO {
             return false;
         }
         return true;
+
+    }
+
+    @Override
+    public boolean saveSupplierItem(int supplier_id, int item_id) throws SQLException {
+        return CrudUtil.execute(
+                "INSERT INTO "
+                        + "SupplierItem (supplier_id, item_id) "
+                        + "VALUES (? , ?) "
+                        + "ON DUPLICATE KEY UPDATE supplier_id = ?;" ,supplier_id ,
+                item_id,     supplier_id);
 
     }
 
@@ -58,8 +73,9 @@ public class SupplierItemDAOImpl implements SupplierItemDAO {
         return List.of();
     }
 
-    public boolean delete(SupplierItem entity) throws SQLException {
-        return CrudUtil.execute("DELETE FROM SupplierItem WHERE supplier_id = ?", entity.getSupplier_id());
+    @Override
+    public boolean delete(int supplier_id) throws SQLException {
+        return CrudUtil.execute("DELETE FROM SupplierItem WHERE supplier_id = ?", supplier_id);
     }
 
     @Override

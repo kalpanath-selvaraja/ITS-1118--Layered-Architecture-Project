@@ -21,17 +21,11 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
 
         // Load FXML
-        //Parent root = loadFXML("QuickSale");
-        
-        //Parent root = loadFXML("Dashboard");
-        //Parent root = loadFXML("CustomerView");
-        Parent root = loadFXML("Login");
-        //Parent root = loadFXML("ItemView");
-        //Parent root = loadFXML("SupplierView");
-        //Parent root = loadFXML("WarrantyView");
-       //Parent root = loadFXML("Users");
 
-        // Create scene
+        Parent root = loadFXML("Login");
+
+
+
         scene = new Scene(root);
         
         
@@ -43,10 +37,6 @@ public class App extends Application {
         stage.setHeight(bounds.getHeight());
         
         
-        System.out.println(bounds.getHeight());
-        System.out.println(bounds.getWidth());
-        System.out.println(bounds.getMinY());
-        System.out.println(bounds.getMinX());
 
         // Attach your CSS
         //scene.getStylesheets().add(getClass().getResource("/styles/dashboard.css").toExternalForm());

@@ -4,6 +4,7 @@
  */
 package lk.ijse.inventorymanagmentsystem.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -18,10 +19,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.custom.EmployeeBO;
+import lk.ijse.inventorymanagmentsystem.bo.custom.UserBO;
 import lk.ijse.inventorymanagmentsystem.dto.EmployeeDTO;
 import lk.ijse.inventorymanagmentsystem.dto.UserDTO;
-import lk.ijse.inventorymanagmentsystem.model.EmployeeModel;
-import lk.ijse.inventorymanagmentsystem.model.UserModel;
+import lk.ijse.inventorymanagmentsystem.util.Navigation;
+import lk.ijse.inventorymanagmentsystem.util.Session;
+
 
 /**
  * FXML Controller class
@@ -33,8 +40,12 @@ public class UsersController implements Initializable {
     /**
      * Initializes the controller class.
      */
-        
- 
+
+
+    @FXML
+    private AnchorPane contentPane;
+
+    String FXML= "/lk/ijse/inventorymanagmentsystem/SupplierManagment.fxml";
 
     @FXML
     private TableView<UserDTO> tblUser;
@@ -91,9 +102,8 @@ public class UsersController implements Initializable {
     private final ObservableList<UserDTO> userList = FXCollections.observableArrayList();
     private final ObservableList<EmployeeDTO> EmployeeList = FXCollections.observableArrayList();
     
-    UserModel userModel = new UserModel();
-    EmployeeModel employeeModel = new EmployeeModel();
-    
+    UserBO userBO= (UserBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.USER);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.EMPLOYEE);
     private static UserDTO selectedUser; // THIS is the bridge
     private EmployeeDTO selectedEmployee; // THIS is the bridge
 
@@ -102,12 +112,29 @@ public class UsersController implements Initializable {
     private final String EMPLOYEE_NAME_REGEX = "^[A-Za-z]{3,}$";
     private final String USER_PASSWORD_REGEX = "^[A-Za-z0-9]{4,}$";
     private final String EMPLOYEE_CONTACT_REGEX = "^[0-9]{10}$";
-    private final String USER_ROLE_REGEX = "^[A-Za-z]{5}$";
+    private final String USER_ROLE_REGEX = "^[A-Za-z]{3,20}$";
     
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("fmbj");   
+
+        String role = Session.getCurrentUser();
+
+
+        if (!"Admin".equalsIgnoreCase(role)) {
+            // Show error message
+            new Alert(Alert.AlertType.ERROR,
+                    "Access Denied! This feature is only available to administrators.").show();
+
+            try {
+                Navigation.load(contentPane,FXML); // Stop initialization
+            } catch (IOException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR,"Ui  error occurred. Please try again.").show();
+            }
+        }
+
+
             
         colId.setCellValueFactory(new PropertyValueFactory<>("userId"));
         colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -178,7 +205,7 @@ public class UsersController implements Initializable {
                         
                         
                         
-                        int result = employeeModel.checkUSerId(selectedUser.getUserId());
+                        int result = employeeBO.checkUserId(selectedUser.getUserId());
                         System.out.println(result);
                         
                         if(result>0){
@@ -187,7 +214,7 @@ public class UsersController implements Initializable {
                             return;
                         }
                         
-                        boolean isAdded = employeeModel.addEmployeeFromUser(selectedUser.getUserId(), String.valueOf(emp.getEmployeeID()));
+                        boolean isAdded = employeeBO.addEmployeeByUser(selectedUser.getUserId(), String.valueOf(emp.getEmployeeID()));
                         
                         if(isAdded){
                             new Alert(Alert.AlertType.INFORMATION, "User Accounnt was Successfully Added to Employee").show();
@@ -268,7 +295,7 @@ public class UsersController implements Initializable {
         
         try {
             
-            int result1 = employeeModel.checkUSerId(selectedEmployee.getEmpUserId());
+            int result1 = employeeBO.checkUserId(selectedEmployee.getEmpUserId());
             
             if(result1 == -1){
                 new Alert(Alert.AlertType.INFORMATION, "This Employee has No User Accounts to Remove").show();
@@ -278,7 +305,7 @@ public class UsersController implements Initializable {
                 
             }
             
-            boolean result2  = employeeModel.removeUserEmployee(selectedEmployee.getEmpUserId());
+            boolean result2  = employeeBO.removeuser(selectedEmployee.getEmpUserId());
             
             if(result2){
                 new Alert(Alert.AlertType.INFORMATION, "Employee Assigned removed").show();
@@ -298,11 +325,11 @@ public class UsersController implements Initializable {
     private void loadUserTable(){
 
         try {
-             System.out.println("loadTable called");
+
             userList.clear();
-            userList.addAll(userModel.getAllUsers());
+            userList.addAll(userBO.getAllUsers());
             
-            System.out.println("Loaded users: " + userList.size()); // 👈 DEBUG
+
             
             tblUser.setItems(userList);
         } catch (Exception e) {
@@ -315,11 +342,9 @@ public class UsersController implements Initializable {
     private void loadEmployeeTable(){
 
         try {
-             System.out.println("loadTable called");
+
             EmployeeList.clear();
-            EmployeeList.addAll(employeeModel.getAllEmployee());
-            
-            System.out.println("Loaded users: " + userList.size()); // 👈 DEBUG
+            EmployeeList.addAll(employeeBO.getAllEmployee());
             
             empTable.setItems(EmployeeList);
         } catch (Exception e) {
@@ -335,8 +360,6 @@ public class UsersController implements Initializable {
             roleField.clear();
     }
     
-    
-    
     @FXML
     public void deleteUser() {
         if (selectedUser == null) {
@@ -344,7 +367,7 @@ public class UsersController implements Initializable {
             return;
         }
         try {
-            int result = employeeModel.checkUSerId(selectedUser.getUserId());
+            int result = employeeBO.checkUserId(selectedUser.getUserId());
             
             if(result != -1){
                 new Alert(Alert.AlertType.ERROR,"This User is Assgned to an Employee can Delete Without removing").show();
@@ -358,13 +381,21 @@ public class UsersController implements Initializable {
         
 
         try {
-            boolean isDeleted = userModel.deleteUser(selectedUser.getUserId());
+
+            int usercount = userBO.getUserCount();
+
+            if(usercount <= 1){
+                new Alert(Alert.AlertType.INFORMATION,"Cannot delete the last user. At least one user must exist in the system").show();
+                return;
+            }
+
+            boolean isDeleted = userBO.deleteUser(selectedUser.getUserId());
 
             if (isDeleted) {
                 loadUserTable();
                 selectedUser = null;
                 new Alert(Alert.AlertType.INFORMATION,"User Was deleted SuccesFully").show();
-                
+
             }
 
         } catch (Exception e) {
@@ -398,7 +429,7 @@ public class UsersController implements Initializable {
         UserDTO userDTO = new UserDTO(userName, password, role);
         
         try {
-            boolean result = userModel.addUsers(userDTO);
+            boolean result = userBO.addUser(userDTO);
             
             if(result){
                 new Alert(Alert.AlertType.INFORMATION,"User was Added succesfully ").show();
@@ -437,7 +468,7 @@ public class UsersController implements Initializable {
         );
 
         try {
-            boolean result = employeeModel.addEmployee(employeeDTO);
+            boolean result = employeeBO.saveEmployee(employeeDTO);
 
             if (result) {
                 new Alert(Alert.AlertType.INFORMATION, "Employee was added successfully").show();

@@ -1,7 +1,6 @@
 package lk.ijse.inventorymanagmentsystem.dao.custom.impl;
 
 import lk.ijse.inventorymanagmentsystem.dao.CrudUtil;
-import lk.ijse.inventorymanagmentsystem.dao.custom.ItemDAO;
 import lk.ijse.inventorymanagmentsystem.dao.custom.OrderItemDAO;
 import lk.ijse.inventorymanagmentsystem.entity.OrderItem;
 
@@ -33,42 +32,69 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 
         return list;
 
+    } // 1
+
+    @Override
+    public boolean save(OrderItem orderItem) throws SQLException { // 2
+
+        return CrudUtil.execute(
+                "INSERT INTO OrderItem (order_id, item_id, quantity, unit_price) VALUES (?, ?, ?, ?)",
+                orderItem.getOrderID(),
+                orderItem.getItemID(),
+                orderItem.getQuantity(),
+                orderItem.getUnitPrice()
+        );
+
+    }
+
+
+    @Override
+    public boolean updateWarrantyStatus(int orderId, String status) throws SQLException {
+        return CrudUtil.execute(
+                "UPDATE OrderItem SET warranty_status = ? WHERE order_id = ?",
+                status,
+                orderId
+        );
+    }
+
+
+
+    // used in a different use case
+    @Override
+    public boolean UpdateWarranty(String orderItemId) throws SQLException {
+        boolean result  = CrudUtil.execute("UPDATE OrderItem SET warranty_status ='Claimed' WHERE order_item_id = ?", orderItemId);
+        return result;
+    }
+
+    // used in a different use case
+    @Override
+    public String getWarrantyStatus(String orderItemId) throws SQLException {
+
+        ResultSet rs = CrudUtil.execute("SELECT warranty_status FROM OrderItem WHERE order_item_id = ?", orderItemId);
+        String status = null ;
+        if(rs.next()){
+            status  = rs.getString("warranty_status");
+            return  status;
+        }
+
+        return status;
     }
 
     @Override
-    public boolean save(OrderItem DTO) throws SQLException {
-        String sql = "INSERT INTO OrderItem (order_id, item_id, quantity, unit_price) VALUES (?, ?, ?, ?)";
+    public int claimedWarrantyCount() throws SQLException{
+        ResultSet rs = CrudUtil.execute("SELECT COUNT(*) AS claimed_warranty FROM OrderItem WHERE warranty_status = ?" ,"Claimed");
 
-        boolean result =  CrudUtil.execute(
-                sql,
-                DTO.getOrderID(),
-                DTO.getItemID(),
-                DTO.getQuantity(),
-                DTO.getUnitPrice()
-        );
+        int qty = 0;
 
+        if(rs.next()){
+            qty = rs.getInt("claimed_warranty");
 
-        int warranty = DTO.getWarranty();
-        if(warranty>0){
-            CrudUtil.execute("UPDATE OrderItem SET warranty_status = 'Active' WHERE order_id = ?",DTO.getOrderID() );
-        }else{
-            CrudUtil.execute("UPDATE OrderItem SET warranty_status = 'No Warranty' WHERE order_id = ?",DTO.getOrderID() );
-
+            return qty;
         }
 
-        ItemDAO itemDAO = new ItemDAOImpl();
-
-        if(result){
-            boolean decresed = itemDAO.decreseItemQty(DTO.getItemID(), DTO.getQuantity());
-
-            if(!decresed){
-                throw new SQLException();
-            }
-        } else {
-            throw new SQLException();
-        }
-        return true;
+        return qty;
     }
+
 
     @Override
     public boolean update(OrderItem DTO) throws SQLException {

@@ -4,14 +4,8 @@ import lk.ijse.inventorymanagmentsystem.dao.CrudUtil;
 import lk.ijse.inventorymanagmentsystem.dao.custom.OrderDAO;
 import lk.ijse.inventorymanagmentsystem.db.DBConnection;
 import lk.ijse.inventorymanagmentsystem.entity.Order;
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.view.JasperViewer;
 
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +14,7 @@ import java.util.Map;
 public class OrderDAOImpl implements OrderDAO {
 
     @Override
-    public List<Order> searchItem(int order_id)throws SQLException{
+    public List<Order> search(int order_id)throws SQLException{
 
         ResultSet rs = CrudUtil.execute(
                 "SELECT * FROM Order WHERE order_id = ?",order_id  //
@@ -42,52 +36,15 @@ public class OrderDAOImpl implements OrderDAO {
         return items;
     }
 
-    @Override
-    public void printReport()throws SQLException , JRException{
 
-        Connection conn = DBConnection.getinstance().getConnection();
-
-        InputStream inputStream = getClass().getResourceAsStream("/reports/OrderReport.jrxml" );
-
-        if(inputStream == null){
-            System.out.println("no jfxml");
-        }
-
-        JasperReport jr = JasperCompileManager.compileReport(inputStream);
-
-        JasperPrint jp = JasperFillManager.fillReport(jr, null , conn);
-
-        JasperViewer.viewReport(jp, false);
-
-    }
 
     @Override
-    public void printInvoice (int orderId) throws SQLException , JRException{
-
-        Connection conn = DBConnection.getinstance().getConnection();
-
-        InputStream inputStream = getClass().getResourceAsStream("/reports/Bill.jrxml" );
-
-        if(inputStream == null){
-            System.out.println("no jfxml");
-        }
-        JasperReport jr =JasperCompileManager.compileReport(inputStream);
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("ORDER_ID", orderId);
-
-        JasperPrint jp = JasperFillManager.fillReport(jr, params , conn);
-
-        JasperViewer.viewReport(jp, false);
-    }
-
-    @Override
-    public String getOrderCount () throws SQLException{
+    public String getCount () throws SQLException{
         ResultSet rs =CrudUtil.execute("SELECT COUNT(*) AS total_orders FROM Orders");
 
         if(rs.next()){
             String count = rs.getString("total_orders");
-            System.out.println(count);
+
             return count;
         }
 
@@ -113,8 +70,14 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public boolean save(Order DTO) throws SQLException {
+    public boolean save(Order order) throws SQLException {
         return false;
+    }
+
+    @Override
+    public int saveAndReturn(Order order) throws SQLException {
+        return CrudUtil.executeAndReturnId("INSERT INTO Orders (cus_id, emp_id, total) VALUES (?, ?, ?)"
+                ,order.getCusid(),order.getEmpid(),order.getTotal());
     }
 
     @Override
@@ -145,5 +108,27 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<Order> search(String search) throws SQLException {
         return List.of();
+        // Empty Method with no use in here
+
     }
+
+    @Override
+    public double getTotalSales() throws SQLException {
+        double total = 0;
+
+        Connection con = DBConnection.getinstance().getConnection();
+
+        try (
+                Statement stm = con.createStatement();
+                ResultSet rs = stm.executeQuery("SELECT SUM(total) AS total FROM Orders")) {
+
+            if (rs.next()) {
+                total = rs.getDouble("total");
+            }
+        }
+
+        return total;
+    }
+
+
 }

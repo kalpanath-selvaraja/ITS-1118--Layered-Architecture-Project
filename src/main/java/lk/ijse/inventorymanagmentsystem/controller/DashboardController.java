@@ -26,8 +26,6 @@ import lk.ijse.inventorymanagmentsystem.util.Session;
 
 public class DashboardController {
 
-
-
     @FXML
     private VBox sideMenuContainer;
     
@@ -51,32 +49,20 @@ public class DashboardController {
     private Button home;
     @FXML
     private Button supplier;
-    
     @FXML
     private Button user;
-
-
     @FXML
     private Button warrnaty;
-    
-    
+
     private List<Button> sidebarButtons;
-    
     @FXML
     private VBox sidebar;
-
     @FXML
     private StackPane root;
 
-   
-    
-    
-    
-    
     @FXML
     public void initialize() throws IOException {
-        
-        //System.out.println(Session.getCurrentUser());
+
         sidebarButtons = new ArrayList<>();
         sidebarButtons.add(order);
         sidebarButtons.add(customer);
@@ -87,11 +73,7 @@ public class DashboardController {
         sidebarButtons.add(warrnaty);
         sidebarButtons.add(supplier);
 
-        for (Button btn : sidebarButtons) {
-            if (btn == null) {
-                System.out.println("A sidebar button is null!");
-            }
-        }
+
         
         root.getStylesheets().add(getClass().getResource("/styles/dashboard.css").toExternalForm());
         
@@ -102,31 +84,19 @@ public class DashboardController {
         unField.setText(Session.getCurrentUserName());
     }
 
-    
-    
-    
-    
-    
-    
-    
- 
-
     @FXML
     private void goCustomer() throws IOException {
         Parent ui = FXMLLoader.load(getClass().getResource("Customer.fxml"));
         mainContent.getChildren().setAll(ui);
     }
-    
-    
-    
-    
+
     private void setActiveButton(Button activeBtn) {
         for (Button btn : sidebarButtons) {
             btn.getStyleClass().remove("sidebar-btn-active"); // remove previous highlight
         }
         activeBtn.getStyleClass().add("sidebar-btn-active"); // highlight current
     }
-    
+
     @FXML
     private void handleLogout() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
@@ -145,18 +115,15 @@ public class DashboardController {
             }
         }
     }
-
     
     @FXML
     private BorderPane mainPane;
-    
-    
+
     @FXML
     public void Home(ActionEvent event) {
         setActiveButton(home);
         loadUI("Home");
     }
-
 
     @FXML
     private void quickSales(ActionEvent event) {
@@ -205,7 +172,6 @@ public class DashboardController {
         setActiveButton(user);
         loadUI("ReportsView");
     }
-
     
     @FXML
     private AnchorPane contentArea;

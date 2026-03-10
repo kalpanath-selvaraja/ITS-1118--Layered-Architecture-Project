@@ -15,7 +15,7 @@ public interface EmployeeDAO extends CrudDAO<Employee> {
 
     public boolean addEmployeeFromUser(int userId, String empId) throws SQLException ;
 
-    public int checkUSerId(int id) throws SQLException;
+    public int checkUserId(int id) throws SQLException;
 
     public boolean removeUserEmployee(int id) throws SQLException ;
 

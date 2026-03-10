@@ -24,11 +24,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.custom.ItemBO;
+import lk.ijse.inventorymanagmentsystem.bo.custom.SupplierBO;
+import lk.ijse.inventorymanagmentsystem.dao.custom.SupplierItemDAO;
 import lk.ijse.inventorymanagmentsystem.dto.ItemDTO;
 import lk.ijse.inventorymanagmentsystem.dto.SupplierDTO;
-import lk.ijse.inventorymanagmentsystem.model.ItemViewModel;
-import lk.ijse.inventorymanagmentsystem.model.SupplierModel;
+
 import lk.ijse.inventorymanagmentsystem.util.Navigation;
+
+import javax.swing.plaf.BorderUIResource;
 
 /**
  * FXML Controller class
@@ -82,7 +87,7 @@ public class SupplierManagmentController implements Initializable {
     
     
     
-        SupplierDTO supDTO ;
+    SupplierDTO supDTO;
         
         
 
@@ -111,12 +116,11 @@ public class SupplierManagmentController implements Initializable {
     @FXML
     private TableColumn cartAction;
     
-    private final SupplierModel spModel = new SupplierModel();
+
     
     private final String CUSTOMER_NAME_REGEX = "^[a-zA-Z]*$";
     
-    ItemViewModel itemViewModel = new ItemViewModel();
-    SupplierModel supplierModel = new SupplierModel();
+
     
     
     ObservableList<ItemDTO> items = FXCollections.observableArrayList();
@@ -124,8 +128,10 @@ public class SupplierManagmentController implements Initializable {
     
     ObservableList<ItemDTO> selectedItems = FXCollections.observableArrayList();
 
-    
-    
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.SUPPLIER);
+    ItemBO itembo = (ItemBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.ITEM);
+
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -230,6 +236,10 @@ public class SupplierManagmentController implements Initializable {
             saveImage.setVisible(false);
             btnUpdate.setVisible(false);
             btnDelete.setVisible(false);
+            add.setVisible(true);
+            update.setVisible(false);
+            delete.setVisible(false);
+
         }
         
         if(used.equals("Update")){
@@ -238,6 +248,9 @@ public class SupplierManagmentController implements Initializable {
             saveImage.setVisible(true);
             btnUpdate.setVisible(true);
             btnDelete.setVisible(false);
+            add.setVisible(false);
+            update.setVisible(true);
+            delete.setVisible(false);
         }
         
         if(used.equals("Delete")){
@@ -246,6 +259,9 @@ public class SupplierManagmentController implements Initializable {
             btnAdd.setVisible(false);
             saveImage.setVisible(false);
             btnUpdate.setVisible(false);
+            add.setVisible(false);
+            update.setVisible(false);
+            delete.setVisible(true);
         }
     }
 
@@ -256,11 +272,24 @@ public class SupplierManagmentController implements Initializable {
         String contact = supplierContact.getText().trim();
         String email = supplierEmail.getText().trim();
         
-        if(!name.matches(CUSTOMER_NAME_REGEX)){
-            
+        boolean exist = supplierBO.checkSupplierExists(contact);
+
+        if(exist){
+            new Alert(Alert.AlertType.ERROR , "Supplier with this contact already exist").show();
         }
-        
-        boolean result  = spModel.checkSupplierexsists(name, email, contact );
+
+        boolean result = false;
+        try{
+            result  = supplierBO.save(new SupplierDTO(name, email, contact ));
+            if(result){
+                new Alert(Alert.AlertType.INFORMATION , "Successfully saved").show();
+                return;
+            }
+
+        }catch(SQLException e){
+            new Alert(Alert.AlertType.ERROR , e.getMessage()).show();
+        }
+
         if(!result){
             new Alert(Alert.AlertType.ERROR , "Supplier was not added").show();
             return;
@@ -291,7 +320,7 @@ public class SupplierManagmentController implements Initializable {
             supDTO = new SupplierDTO(Integer.parseInt(ID) ,name, email , contact );
             
             try {
-                boolean result =  spModel.updateSupplierWithItems(supDTO , CartItem);
+                boolean result =  supplierBO.updateSupplierWithItems(supDTO , CartItem);
                 if(result){
                     new Alert(Alert.AlertType.INFORMATION, "Updated Successfully !").show();
                     
@@ -315,23 +344,30 @@ public class SupplierManagmentController implements Initializable {
         
         if(ID.isEmpty()){
             new Alert(Alert.AlertType.ERROR, " Plese select a Supplier to delete").show();
+            return;
         }else{
             try {
-                boolean result = spModel.checkSupplierHasItems(Integer.parseInt(ID));
-                
+
+                boolean result = supplierBO.checkSupplierConnected(Integer.parseInt(ID));
+                System.out.println("🔍 Supplier has items: " + result);
+
                 if(result){
                     new Alert(Alert.AlertType.ERROR, "This Supplier is connect to an Item cant delete").show();
-                }else{
-                    boolean result2 = spModel.deleteSupplier(Integer.parseInt(ID));
-                    
+                    return;
+                }
+                if(!result){
+                    boolean result2 = supplierBO.deleteSupplier(Integer.parseInt(ID));
+
                     if(result2){
                         new Alert(Alert.AlertType.INFORMATION, " Supplier is Deleted Successfully").show();
- 
+
                     }else{
                         new Alert(Alert.AlertType.ERROR, "Supplier delete is Unsuccesfull").show();
                     }
                 }
-                
+
+
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Database Error").show();
@@ -372,7 +408,7 @@ public class SupplierManagmentController implements Initializable {
     private void loadTable(){
        
         try {
-            List<ItemDTO> itemList = itemViewModel.getItems();
+            List<ItemDTO> itemList = itembo.getItems();
             items.setAll(itemList);
             itemTable.setItems(items);
         } catch (Exception e) {
@@ -384,7 +420,7 @@ public class SupplierManagmentController implements Initializable {
     @FXML
     private void loadTableCart(int id){
         try {
-            List<ItemDTO> cartItemList = supplierModel.getItemsForItem(id);
+            List<ItemDTO> cartItemList = supplierBO.getItemsForItem(id);
             CartItem.setAll(cartItemList);        
             cartItemTable.setItems(CartItem);     
         } catch (Exception e) {

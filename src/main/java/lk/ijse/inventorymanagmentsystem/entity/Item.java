@@ -1,5 +1,9 @@
 package lk.ijse.inventorymanagmentsystem.entity;
 
+import lk.ijse.inventorymanagmentsystem.dto.ItemDTO;
+
+import java.util.List;
+
 public class Item {
 
 
@@ -9,10 +13,21 @@ public class Item {
     private int quantity;
     private double unitPrice ;
     private int warranty;
-
+//    private int warranty_id;
     private String supplierName;
 
     private int supplierId;   // VERY IMPORTANT
+
+    public Item(ItemDTO itemDTO) {
+        this.itemId = itemDTO.getItemId();
+        this.itemName = itemDTO.getItemName();
+    }
+
+    public Item(List<ItemDTO> cartItems) {
+        this.itemId = cartItems.get(0).getItemId();
+    }
+
+
 
     public int getSupplierId() {
         return supplierId;
@@ -31,7 +46,7 @@ public class Item {
     }
 
 
-    public Item(int itemId, String itemName, int quantity, double unitPrice, int warranty) {
+    public Item(int itemId, String itemName,double unitPrice, int quantity , int warranty) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.quantity = quantity;
