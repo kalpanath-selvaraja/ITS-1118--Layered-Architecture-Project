@@ -1,8 +1,6 @@
-package lk.ijse.inventorymanagmentsystem.bo.custom;
+package lk.ijse.inventorymanagmentsystem.bo;
 
-import lk.ijse.inventorymanagmentsystem.bo.SuperBO;
 import lk.ijse.inventorymanagmentsystem.bo.custom.impl.*;
-import lk.ijse.inventorymanagmentsystem.dao.custom.impl.QueryDAOImpl;
 
 public class BOFactory {
 

@@ -13,9 +13,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.BOFactory;
 import lk.ijse.inventorymanagmentsystem.bo.custom.CustomerBO;
-import lk.ijse.inventorymanagmentsystem.dao.DAOFactory;
 import lk.ijse.inventorymanagmentsystem.dto.CustomerDTO;
 
 import lk.ijse.inventorymanagmentsystem.util.Navigation;

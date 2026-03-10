@@ -27,7 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.BOFactory;
 import lk.ijse.inventorymanagmentsystem.bo.custom.ItemBO;
 import lk.ijse.inventorymanagmentsystem.dto.ItemDTO;
 import lk.ijse.inventorymanagmentsystem.util.Navigation;

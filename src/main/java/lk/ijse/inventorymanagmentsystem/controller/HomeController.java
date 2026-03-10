@@ -14,9 +14,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import lk.ijse.inventorymanagmentsystem.bo.BOFactory;
 import lk.ijse.inventorymanagmentsystem.bo.custom.*;
-import lk.ijse.inventorymanagmentsystem.dao.DAOFactory;
-import lk.ijse.inventorymanagmentsystem.entity.Warranty;
 //import lk.ijse.inventorymanagmentsystem.model.WarrantyModel;
 
 /**

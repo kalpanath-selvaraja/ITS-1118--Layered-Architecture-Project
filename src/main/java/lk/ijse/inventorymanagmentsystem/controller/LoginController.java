@@ -8,7 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import lk.ijse.inventorymanagmentsystem.App;
-import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.BOFactory;
 import lk.ijse.inventorymanagmentsystem.bo.custom.EmployeeBO;
 import lk.ijse.inventorymanagmentsystem.bo.custom.UserBO;
 import lk.ijse.inventorymanagmentsystem.dto.EmployeeDTO;

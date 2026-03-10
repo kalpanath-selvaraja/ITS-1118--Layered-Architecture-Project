@@ -21,7 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.BOFactory;
 import lk.ijse.inventorymanagmentsystem.bo.custom.WarrantyBO;
 import lk.ijse.inventorymanagmentsystem.dto.WarrantyDTO;
 

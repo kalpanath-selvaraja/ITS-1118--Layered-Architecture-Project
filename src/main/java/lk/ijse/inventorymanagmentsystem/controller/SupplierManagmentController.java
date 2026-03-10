@@ -13,7 +13,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.DepthTest;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,16 +23,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.inventorymanagmentsystem.bo.custom.BOFactory;
+import lk.ijse.inventorymanagmentsystem.bo.BOFactory;
 import lk.ijse.inventorymanagmentsystem.bo.custom.ItemBO;
 import lk.ijse.inventorymanagmentsystem.bo.custom.SupplierBO;
-import lk.ijse.inventorymanagmentsystem.dao.custom.SupplierItemDAO;
 import lk.ijse.inventorymanagmentsystem.dto.ItemDTO;
 import lk.ijse.inventorymanagmentsystem.dto.SupplierDTO;
 
 import lk.ijse.inventorymanagmentsystem.util.Navigation;
-
-import javax.swing.plaf.BorderUIResource;
 
 /**
  * FXML Controller class
